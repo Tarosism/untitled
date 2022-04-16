@@ -102,6 +102,7 @@ section {
 }
 body {
   line-height: 1;
+  background-color: #303030;
 }
 ol,
 ul {
@@ -124,13 +125,50 @@ table {
 }
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 h1 {
   font-size: 30px;
+  color: rgba(255, 255, 255, 87%);
 }
 h2 {
   font-size: 24px;
+  color: rgba(255, 255, 255, 87%);
 }
 h3 {
   font-size: 20px;
+  color: rgba(255, 255, 255, 87%);
+}
+
+button {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+p {
+  font-size: 16px;
+}
+
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.eightSeven {
+  color: rgba(255, 255, 255, 87%);
+}
+
+.six {
+  color: rgba(255, 255, 255, 60%);
+}
+
+.threeEight {
+  color: rgba(255, 255, 255, 38%);
+}
+
+.forgetPass {
+  color: violet;
+  font-size: 14px;
+  cursor: pointer;
 }

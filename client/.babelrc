@@ -1,6 +1,6 @@
 {
   "presets": ["next/babel"],
-  "plugins": ["babel-plugin-styled-components"]
+  "plugins": [["styled-components", { "ssr": true }]]
 }
 
-/*https://velog.io/@hwang-eunji/Styled-components-nextjs%EC%97%90%EC%84%9C-className-%EC%98%A4%EB%A5%98*/
+//https://stackoverflow.com/questions/51791163/warning-prop-classname-did-not-match-when-using-styled-components-with-seman

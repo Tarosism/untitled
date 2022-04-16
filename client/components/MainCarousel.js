@@ -19,7 +19,7 @@ export default function MainCarousel() {
 
   return (
     <>
-      <Slider dots={true} infinite={true} speed={500} slidesToShow={1}>
+      <Slider dots={false} infinite={true} speed={500} slidesToShow={1}>
         {dummy.map((fill) => (
           <img src={fill.img} />
         ))}

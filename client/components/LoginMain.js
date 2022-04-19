@@ -1,6 +1,11 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { MainDefault, TextCenter, PaddingLine } from "../style/MainStyle";
+import {
+  MainDefault,
+  TextCenter,
+  PaddingLine,
+  NovelListAdd,
+} from "../style/MainStyle";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import LoginMainRecord from "./LoginMainRecord";
@@ -82,17 +87,4 @@ const NovelList = styled.div`
     z-index: -1;
     filter: brightness(0.5);
   }
-`;
-
-const NovelListAdd = styled.div`
-  width: 15rem;
-  height: 15rem;
-  border: 2px solid rgba(255, 255, 255, 0.38);
-  border-radius: 15%;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.86);
-  cursor: pointer;
 `;

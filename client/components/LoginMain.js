@@ -2,6 +2,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { MainDefault, TextCenter, PaddingLine } from "../style/MainStyle";
 import styled from "styled-components";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import LoginMainRecord from "./LoginMainRecord";
 
 export default function LoginMain() {
   const count = [
@@ -28,7 +30,15 @@ export default function LoginMain() {
               </NovelList>
             </Link>
           ))}
+          <NovelListAdd>
+            <PlusCircleOutlined
+              style={{ color: "rgba(255, 255, 255, .38)", fontSize: "2rem" }}
+            />
+          </NovelListAdd>
         </NovelListWrapper>
+        <PaddingLine />
+        <h3>님의 기록들</h3>
+        <LoginMainRecord />
       </MainDefault>
     </>
   );
@@ -61,6 +71,7 @@ const NovelList = styled.div`
   justify-content: center;
   color: rgba(255, 255, 255, 0.86);
   cursor: pointer;
+  // 글자는 살리면서 backimg에 블러 넣는 방법. 걍 외우셈
   &::after {
     content: "";
     width: 15rem;

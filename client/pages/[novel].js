@@ -1,16 +1,37 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import LoginNav from "../components/LoginNav";
-import { MainDefault } from "../style/NovelMainStyle";
+import {
+  MainDefault,
+  LinkWrapper,
+  DoingWrapper,
+  IntroduceWrapper,
+} from "../style/NovelMainStyle";
 import Link from "next/link";
 import styled from "styled-components";
 import NovelDetail from "../components/NovelDetail";
 import { NovelDoingSelect, PaddingLine } from "../style/MainStyle";
-import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
+import {
+  LeftOutlined,
+  ContainerOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
+import LoginChapterList from "../components/LoginChapterList";
 
 export default function novel() {
   const router = useRouter();
   const { novel } = router.query;
+  console.log(router.query);
+
+  const completedChapters = [
+    { title: "2화 : 휴재", word: 1300 },
+    { title: "1화 : 깐돌이의 모험", word: 1100 },
+  ];
+  const incompleteChapters = {
+    title: "3화 : 휴재 후기",
+    targetWords: 3000,
+    word: 1100,
+  };
 
   const [linkCount, setLinkCount] = useState(2);
   return (
@@ -38,14 +59,16 @@ export default function novel() {
           <NovelDetail />
           <PaddingLine />
           <DoingWrapper>
-            <NovelDoingSelect>
-              <ContainerOutlined
-                style={{ fontSize: "2.5rem" }}
-                className="six"
-              />
-              <br />
-              시놉시스
-            </NovelDoingSelect>
+            <Link href={`/${novel}/synopsisList`}>
+              <NovelDoingSelect>
+                <ContainerOutlined
+                  style={{ fontSize: "2.5rem" }}
+                  className="six"
+                />
+                <br />
+                시놉시스
+              </NovelDoingSelect>
+            </Link>
             <NovelDoingSelect>
               <ContainerOutlined
                 style={{ fontSize: "2.5rem" }}
@@ -73,49 +96,17 @@ export default function novel() {
           </DoingWrapper>
           <PaddingLine />
           <div>
-            <div>
-              <h3>작성중인 회차</h3>
-              <br />
-              <NovelListWrapper>
-                <img
-                  src="http://placeimg.com/190/130/any"
-                  style={{ marginRight: "2rem" }}
-                />
-                <NovelList>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1rem",
-                    }}
-                  >
-                    <h3>title</h3> <sapn className="six">1400/1500</sapn>
-                  </div>
-                </NovelList>
-              </NovelListWrapper>
-            </div>
+            <h3>작성중인 회차</h3> <br />
+            <LoginChapterList incompleteChapters={incompleteChapters} />
             <PaddingLine />
-            <div>
-              <h3>작품 회차</h3>
-              <br />
-              <NovelListWrapper>
-                <img
-                  src="http://placeimg.com/190/130/any"
-                  style={{ marginRight: "2rem" }}
-                />
-                <NovelList>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1rem",
-                    }}
-                  >
-                    <h3>title</h3> <sapn className="six">1400/1500</sapn>
-                  </div>
-                </NovelList>
-              </NovelListWrapper>
-            </div>
+            <h3>작성한 회차</h3>
+            <br />
+            {completedChapters.map((fill) => (
+              <LoginChapterList
+                chapterTitle={fill.title}
+                wordCounts={fill.word}
+              />
+            ))}
           </div>
         </IntroduceWrapper>
       </MainDefault>
@@ -124,25 +115,3 @@ export default function novel() {
 }
 //결국 아래에 작은 글씨 하나를 넣기는 넣어야 함. 골치아픔.. 이쪽은 일단 스킵하고
 // 데이터 갖고 놀 때 다시 생각해보도록 하자 그리고 컴포넌트들 정리하셈
-const LinkWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const DoingWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const IntroduceWrapper = styled.div`
-  display: grid;
-`;
-
-const NovelListWrapper = styled.div`
-  display: flex;
-  border-top: 1px solid rgba(255, 255, 255, 0.38);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.38);
-`;
-const NovelList = styled.div`
-  display: flex;
-`;

@@ -13,3 +13,18 @@ export const TextCenter = styled.div`
 export const PaddingLine = styled.div`
   padding: 25px 0;
 `;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+export const DoingWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 15rem);
+  justify-content: space-between;
+  gap: 5rem 50px;
+`;
+
+export const IntroduceWrapper = styled.div`
+  display: grid;
+`;

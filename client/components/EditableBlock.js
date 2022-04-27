@@ -35,37 +35,43 @@ export default function EditableBlock() {
   return (
     <>
       {" "}
-      <div style={{ textAlign: "end" }}>
-        <p className="six" style={{ margin: "0 1rem 1rem 1rem" }}>
-          {textCounts}
-        </p>
-      </div>
       <div
         style={{
+          width: "31.25rem",
           display: "flex",
-          justifyContent: "end",
-          padding: "0 1rem 1rem 1rem",
+          justifyContent: "center",
+          flexDirection: "column",
         }}
       >
-        <CopyToClipboard text={copyText.value} onCopy={copyTextHandler}>
-          <CopyOutlined
-            className="eightSeven"
-            style={{
-              fontSize: "1.5rem",
-              cursor: "pointer",
-              padding: "0.25rem",
-              border: "1px solid rgba(255,255,255, 60%)",
-              borderRadius: "20%",
-              textAlign: "end",
-            }}
-            onClick={copyTextHandler}
-          />
-        </CopyToClipboard>
-      </div>
-      <div
-        style={{ width: "844px", display: "flex", justifyContent: "center" }}
-      >
-        <div style={{ width: "500px" }}>
+        <div style={{ textAlign: "end" }}>
+          <p className="six" style={{ margin: "0 1rem 1rem 1rem" }}>
+            {textCounts}
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            padding: "0 1rem 1rem 1rem",
+          }}
+        ></div>
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <CopyToClipboard text={copyText.value} onCopy={copyTextHandler}>
+            <CopyOutlined
+              className="eightSeven"
+              style={{
+                fontSize: "1.5rem",
+                cursor: "pointer",
+                padding: "0.25rem",
+                border: "1px solid rgba(255,255,255, 60%)",
+                borderRadius: "20%",
+                textAlign: "end",
+              }}
+              onClick={copyTextHandler}
+            />
+          </CopyToClipboard>
+        </div>
+        <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
             html={title.html}

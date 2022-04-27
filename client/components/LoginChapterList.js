@@ -25,11 +25,11 @@ export default function LoginChapterList({
               {incompleteChapters ? incompleteChapters.title : chapterTitle}
             </h3>{" "}
             {incompleteChapters ? (
-              <sapn className="six">
+              <span className="six">
                 {incompleteChapters.word} / {incompleteChapters.targetWords}{" "}
-              </sapn>
+              </span>
             ) : (
-              <sapn className="six">{wordCounts}</sapn>
+              <span className="six">{wordCounts}</span>
             )}
           </div>
         </NovelList>

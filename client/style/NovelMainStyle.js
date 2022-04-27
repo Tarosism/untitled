@@ -17,6 +17,8 @@ export const PaddingLine = styled.div`
 export const LinkWrapper = styled.div`
   display: flex;
   gap: 1rem;
+  height: 3rem;
+  align-items: center;
 `;
 export const DoingWrapper = styled.div`
   display: grid;

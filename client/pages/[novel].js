@@ -21,7 +21,6 @@ import LoginChapterList from "../components/LoginChapterList";
 export default function novel() {
   const router = useRouter();
   const { novel } = router.query;
-  console.log(router.query);
 
   const completedChapters = [
     { title: "2화 : 휴재", word: 1300 },

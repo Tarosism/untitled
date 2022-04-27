@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { LinkWrapper } from "../../../style/NovelMainStyle";
 import EditableBlock from "../../../components/EditableBlock";
-import { LeftOutlined } from "@ant-design/icons";
+import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
+import { PaddingLine } from "../../../style/NovelMainStyle";
 
 export default function synopsis() {
   const router = useRouter();
@@ -45,7 +46,10 @@ export default function synopsis() {
                 </>
               )}
             </LinkWrapper>
-            <EditableBlock />
+
+            <EditableBlockWrapper>
+              <EditableBlock />
+            </EditableBlockWrapper>
           </div>
         </BlackMain>
       </BlankWrapper>
@@ -54,11 +58,16 @@ export default function synopsis() {
 }
 
 const BlankWrapper = styled.div`
-  width: 100vw;
+  width: 99vw;
 `;
 
 const BlackMain = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  border-left: 1px solid rgba(255, 255, 255, 60%);
+`;
+
+const EditableBlockWrapper = styled.div`
+  width: 100%;
 `;

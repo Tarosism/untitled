@@ -68,30 +68,36 @@ export default function novel() {
                 시놉시스
               </NovelDoingSelect>
             </Link>
-            <NovelDoingSelect>
-              <ContainerOutlined
-                style={{ fontSize: "2.5rem" }}
-                className="six"
-              />
-              <br />
-              캐릭터
-            </NovelDoingSelect>
-            <NovelDoingSelect>
-              <ContainerOutlined
-                style={{ fontSize: "2.5rem" }}
-                className="six"
-              />
-              <br />
-              세계관
-            </NovelDoingSelect>
-            <NovelDoingSelect>
-              <ContainerOutlined
-                style={{ fontSize: "2.5rem" }}
-                className="six"
-              />
-              <br />
-              소설쓰기
-            </NovelDoingSelect>
+            <Link href={`/${novel}/charaList`}>
+              <NovelDoingSelect>
+                <ContainerOutlined
+                  style={{ fontSize: "2.5rem" }}
+                  className="six"
+                />
+                <br />
+                캐릭터
+              </NovelDoingSelect>
+            </Link>
+            <Link href={`/${novel}/worldview`}>
+              <NovelDoingSelect>
+                <ContainerOutlined
+                  style={{ fontSize: "2.5rem" }}
+                  className="six"
+                />
+                <br />
+                세계관
+              </NovelDoingSelect>
+            </Link>
+            <Link href={`/${novel}/blank`}>
+              <NovelDoingSelect>
+                <ContainerOutlined
+                  style={{ fontSize: "2.5rem" }}
+                  className="six"
+                />
+                <br />
+                소설쓰기
+              </NovelDoingSelect>
+            </Link>
           </DoingWrapper>
           <PaddingLine />
           <div>

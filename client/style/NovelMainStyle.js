@@ -19,6 +19,7 @@ export const LinkWrapper = styled.div`
   gap: 1rem;
   height: 3rem;
   align-items: center;
+  margin-left: 1rem;
 `;
 export const DoingWrapper = styled.div`
   display: grid;

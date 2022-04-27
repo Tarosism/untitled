@@ -6,29 +6,24 @@ import {
   PaddingLine,
   NovelListAdd,
 } from "../style/MainStyle";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import LoginMainRecord from "./LoginMainRecord";
 
 export default function LoginMain() {
-  const count = [
-    { title: "깐돌이의 모험", picture: "http://placeimg.com/640/480/tech" },
-    { title: "깐돌이의 위험2", picture: "http://placeimg.com/640/480/people" },
-    { title: "나의계절", picture: "http://placeimg.com/640/480/animals" },
-    { title: "대왕카스테라", picture: "http://placeimg.com/640/480/arch" },
-    { title: "운수나쁜날", picture: "http://placeimg.com/640/480/nature" },
-  ];
-  //4개를 기준점으로 둬야 함. 한 줄에 4개씩만 들어갈 수 있도록
+  const state = useSelector((state) => state.userReducer);
+  const { me } = state;
 
   return (
     <>
       <MainDefault>
         <PaddingLine />
-        <h2 style={{ fontWeight: "bold" }}>필명들어감 님,</h2> <br />
+        <h2 style={{ fontWeight: "bold" }}>{me.nickName} 님,</h2> <br />
         <p className="eightSeven">오늘은 또 어떤 이야기를 들려주실 건가요?</p>
         <PaddingLine />
         <NovelListWrapper>
-          {count.map((fill) => (
+          {me.novelList.map((fill) => (
             <Link href={`/${fill.title}`}>
               <NovelList pic={fill.picture}>
                 <span>{fill.title}</span>
@@ -42,7 +37,7 @@ export default function LoginMain() {
           </NovelListAdd>
         </NovelListWrapper>
         <PaddingLine />
-        <h3>님의 기록들</h3>
+        <h3>{me.nickName} 님의 기록들</h3>
         <LoginMainRecord />
       </MainDefault>
     </>

@@ -5,20 +5,19 @@ import LoginModal from "../components/LoginModal";
 import SignupModal from "../components/SignupModal";
 import LoginMain from "../components/LoginMain";
 import LoginNav from "../components/LoginNav";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function index() {
+  const state = useSelector((state) => state.userReducer);
+  const { me, isLoggedIn } = state;
+
   const [loginModal, setLoginModal] = useState(false);
   const [singupModal, setSingupModal] = useState(false);
-  const [loginState, setLoginState] = useState(false);
 
   return (
     <>
       {loginModal && (
-        <LoginModal
-          loginModal={loginModal}
-          setLoginModal={setLoginModal}
-          setLoginState={setLoginState}
-        />
+        <LoginModal loginModal={loginModal} setLoginModal={setLoginModal} />
       )}
       {singupModal && (
         <SignupModal
@@ -26,9 +25,9 @@ export default function index() {
           setSingupModal={setSingupModal}
         />
       )}
-      {loginState ? (
+      {isLoggedIn ? (
         <>
-          <LoginNav setLoginState={setLoginState} />
+          <LoginNav />
           <LoginMain />
         </>
       ) : (

@@ -1,21 +1,25 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 export default function LoginMainRecord() {
+  const state = useSelector((state) => state.userReducer);
+  const { me } = state;
+
   return (
     <>
       <RecordWrapper>
         <div>
           <p className="threeEight">모든 작품에 쓴 글자수</p>
-          <InlineH1>3,456,123,123</InlineH1>
+          <InlineH1>{me.record.words}</InlineH1>
         </div>
         <div>
           <p className="threeEight">창조한 캐릭터</p>
-          <InlineH1>563</InlineH1>
+          <InlineH1>{me.record.charaCounts}</InlineH1>
         </div>
         <div>
           <p className="threeEight">완료한 챕터</p>
-          <InlineH1>12</InlineH1>
+          <InlineH1>{me.record.chapters}</InlineH1>
         </div>
       </RecordWrapper>
     </>

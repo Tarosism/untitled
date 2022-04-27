@@ -1,7 +1,10 @@
 import "../style/globals.css";
 import "../style/slick-carousel/slick/slick.css";
 import "../style/slick-carousel/slick/slick-theme.css";
+import wrapper from "../store/configureStore";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
+
+export default wrapper.withRedux(App);

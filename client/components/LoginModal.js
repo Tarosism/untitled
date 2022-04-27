@@ -6,9 +6,13 @@ import {
   ExBtn,
   ExBtnWrapper,
 } from "../style/ModalStyle";
+import { useSelector, useDispatch } from "react-redux";
+import { loginAction } from "../reducer/user";
 import styled from "styled-components";
 
-export default function LoginModal({ setLoginModal, setLoginState }) {
+export default function LoginModal({ setLoginModal }) {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("asd");
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -21,9 +25,37 @@ export default function LoginModal({ setLoginModal, setLoginState }) {
 
   const loginSuccess = () => {
     if (email && password !== "") {
-      setLoginModal(false);
-      setLoginState(true);
+      dispatch(
+        loginAction({
+          email,
+          nickName: "taro",
+          novelList: [
+            {
+              title: "깐돌이의 모험",
+              picture: "http://placeimg.com/500/500/any",
+              info: "깐돌이의 우당탕탕 모험기",
+              synopsis: [{ title: "1화 시놉스시" }],
+              chara: [{ name: "김깐돌", info: "귀염둥이 깐돌이" }],
+              worldview: "장엄하고 커다란 세계",
+              writing: { title: "", text: "" },
+              written: { title: "1화", text: "몰?루" },
+            },
+            {
+              title: "깐돌이의 모험 remaster",
+              picture: "http://placeimg.com/500/500/arch",
+              info: "새로운 그래픽으로 태어난 깐돌이의 우당탕탕 모험기",
+              synopsis: [{ title: "프롤로그 시놉스시" }],
+              chara: [{ name: "김깐돌", info: "버전업된 귀염둥이 깐돌이" }],
+              worldview: "더 놀라워진 장엄하고 커다란 세계",
+              writing: { title: "", text: "" },
+              written: { title: "1화", text: "몰?루" },
+            },
+          ],
+          record: { words: 12, charaCounts: 1, chapters: 1 },
+        })
+      );
     }
+    setLoginModal(false);
   };
 
   return (

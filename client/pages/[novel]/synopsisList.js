@@ -6,6 +6,8 @@ import {
   LinkWrapper,
   DoingWrapper,
 } from "../../style/NovelMainStyle";
+import { useSelector, useDispatch } from "react-redux";
+
 import { NovelDoingSelect, PaddingLine } from "../../style/MainStyle";
 import {
   LeftOutlined,
@@ -18,6 +20,9 @@ import LoginNav from "../../components/LoginNav";
 export default function synopsisList() {
   const router = useRouter();
   const { novel } = router.query;
+
+  const state = useSelector((state) => state.userReducer);
+  const { me, nowSelect } = state;
 
   const [linkCount, setLinkCount] = useState(3);
 
@@ -37,13 +42,13 @@ export default function synopsisList() {
                   className="threeEight"
                   style={{ fontSize: "14px" }}
                 />{" "}
-                양승준
+                {me?.nickName}
               </span>
             </Link>
           </div>
           <span className="threeEight">/</span>
           <Link href={`/${novel}`}>
-            <span className="eightSeven">{novel}</span>
+            <span className="eightSeven">{nowSelect.title}</span>
           </Link>
           {linkCount > 2 && (
             <>
@@ -54,15 +59,15 @@ export default function synopsisList() {
         </LinkWrapper>
         <PaddingLine />
         <DoingWrapper>
-          {synopsisListBox.map((fill) => (
-            <Link href={`/${novel}/synopsisList/${fill}`}>
+          {nowSelect.synopsis.map((fill) => (
+            <Link href={`/${novel}/synopsisList/${fill.id}`}>
               <NovelDoingSelect>
                 <ContainerOutlined
                   style={{ fontSize: "2.5rem" }}
                   className="six"
                 />
                 <br />
-                {fill}
+                {fill.title}
               </NovelDoingSelect>
             </Link>
           ))}

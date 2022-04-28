@@ -7,13 +7,21 @@ import EditableBlock from "../../../components/EditableBlock";
 import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
 import { PaddingLine } from "../../../style/NovelMainStyle";
 import BlankNav from "../../../components/BlankNav";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function synopsis() {
   const router = useRouter();
   const { synopsis, novel } = router.query;
 
+  const state = useSelector((state) => state.userReducer);
+  const { me, nowSelect } = state;
+
   const [linkCount, setLinkCount] = useState(3);
 
+  const idx = nowSelect.synopsis.findIndex(
+    (fill) => fill.id === Number(synopsis)
+  );
+  const nowSynopsis = nowSelect.synopsis[idx];
   return (
     <>
       <BlankWrapper>
@@ -28,13 +36,13 @@ export default function synopsis() {
                     className="threeEight"
                     style={{ fontSize: "14px" }}
                   />{" "}
-                  양승준
+                  {me?.nickName}
                 </span>
               </Link>
             </div>
             <span className="threeEight">/</span>
             <Link href={`/${novel}`}>
-              <span className="eightSeven">{novel}</span>
+              <span className="eightSeven">{nowSelect.title}</span>
             </Link>
             {linkCount > 2 && (
               <>
@@ -43,13 +51,13 @@ export default function synopsis() {
                   <span className="eightSeven">시놉시스</span>
                 </Link>
                 <span className="threeEight">/</span>
-                <span className="eightSeven">{synopsis}</span>
+                <span className="eightSeven">{nowSynopsis.title}</span>
               </>
             )}
           </LinkWrapper>
 
           <EditableBlockWrapper>
-            <EditableBlock />
+            <EditableBlock nowSynopsis={nowSynopsis} />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>

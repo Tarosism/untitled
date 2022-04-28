@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MainDefault,
   TextCenter,
@@ -10,15 +10,16 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import LoginMainRecord from "./LoginMainRecord";
+import { updateNowSelectAction } from "../reducer/user";
 
 export default function LoginMain() {
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
   const dispatch = useDispatch();
 
-  const nowSelect = (fill) => {
-    dispatch;
-  };
+  useEffect(() => {
+    dispatch(updateNowSelectAction(null));
+  }, []);
 
   return (
     <>

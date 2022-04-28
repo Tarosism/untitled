@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
 import ContentEditable from "react-contenteditable";
+import { useSelector, useDispatch } from "react-redux";
 import { CopyOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { synopsisTitleFixAction } from "../reducer/user";
 
-export default function EditableBlock() {
+export default function EditableBlock({ nowSynopsis }) {
   const [text, setText] = useState({ html: "" });
   const [title, setTitle] = useState({
     html: "",
@@ -12,6 +14,8 @@ export default function EditableBlock() {
   const [textCounts, setTextCounts] = useState(0);
 
   const ref = useRef();
+
+  const dispatch = useDispatch();
 
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
@@ -73,10 +77,10 @@ export default function EditableBlock() {
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={title.html}
+            html={nowSynopsis.title}
             disabled={false}
             onChange={(e) =>
-              setTitle((prev) => ({ ...prev, html: e.target.value }))
+              dispatch(synopsisTitleFixAction(e.target.value, nowSynopsis.id))
             }
             tagName="h2"
             placeholder={"무제"}

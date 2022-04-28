@@ -4,22 +4,23 @@ import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
 import { novelTitleFixAction, novelInfoFixAction } from "../reducer/user";
 
-export default function NovelDetail({ nowSelect }) {
+export default function NovelDetail() {
   const router = useRouter();
   const { novel } = router.query;
 
   const state = useSelector((state) => state.userReducer);
-  const { me } = state;
+  const { me, nowSelect } = state;
   const dispatch = useDispatch();
   const ref = useRef();
 
   useEffect(() => {
-    dispatch(novelTitleFixAction(nowSelect.html.title, novel));
-    dispatch(novelInfoFixAction(nowSelect.html.info, novel));
+    nowSelect && dispatch(novelTitleFixAction(nowSelect.title, novel));
+    nowSelect && dispatch(novelInfoFixAction(nowSelect.info, novel));
+
     //제목을 바꾸면 바로바로 수정되는 것을 위해 만들었음. useState 안 쓰기
     //+ 애당초 nowSelect는 redux에서 가져오는 것이기 때문에 여기서 상태를 바꿔주면 쟤도 바뀜
     //고로 제목을 바꾸는데 있어서 이 페이지에 따로 me.title이런 식으로 안 가져와도 됨
-  }, []);
+  }, [nowSelect]);
 
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
@@ -44,7 +45,7 @@ export default function NovelDetail({ nowSelect }) {
           <div>
             <ContentEditable
               className="eightSeven"
-              html={nowSelect.html?.title}
+              html={nowSelect?.title}
               disabled={false}
               onChange={(e) => {
                 dispatch(novelTitleFixAction(e.target.value, novel));
@@ -59,12 +60,12 @@ export default function NovelDetail({ nowSelect }) {
               <span style={{ fontSize: "14px" }} className="six">
                 글{" "}
               </span>{" "}
-              양승준
+              {me?.nickName}
             </p>
             <hr />
             <ContentEditable
               className="eightSeven"
-              html={nowSelect.html?.info}
+              html={nowSelect?.info}
               disabled={false}
               onChange={(e) => {
                 dispatch(novelInfoFixAction(e.target.value, novel));

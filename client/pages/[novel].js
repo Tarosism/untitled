@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import LoginNav from "../components/LoginNav";
 import {
@@ -9,37 +9,27 @@ import {
 } from "../style/NovelMainStyle";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
-import styled from "styled-components";
 import NovelDetail from "../components/NovelDetail";
 import { NovelDoingSelect, PaddingLine } from "../style/MainStyle";
-import {
-  LeftOutlined,
-  ContainerOutlined,
-  PlusCircleOutlined,
-} from "@ant-design/icons";
+import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
 import LoginChapterList from "../components/LoginChapterList";
+import { updateNowSelectAction } from "../reducer/user";
 
 export default function novel() {
   const router = useRouter();
   const { novel } = router.query;
   const state = useSelector((state) => state.userReducer);
-  const { me } = state;
+  const { me, nowSelect } = state;
+  const dispatch = useDispatch();
 
-  const nowSelect = me?.novelList.filter(
-    (fill) => fill.id === Number(novel)
-  )[0];
+  useEffect(() => {
+    const nowSelect = me?.novelList.filter(
+      (fill) => fill.id === Number(novel)
+    )[0];
+    dispatch(updateNowSelectAction(nowSelect));
+  }, [novel]);
 
-  const completedChapters = [
-    { title: "2화 : 휴재", word: 1300 },
-    { title: "1화 : 깐돌이의 모험", word: 1100 },
-  ];
-  const incompleteChapters = {
-    title: "3화 : 휴재 후기",
-    targetWords: 3000,
-    word: 1100,
-  };
-  //me.novelList.map(fill) => fill.title etc...
-
+  const novelIdx = me?.novelList.findIndex((fill) => fill.id === Number(novel));
   const [linkCount, setLinkCount] = useState(2);
   return (
     <>
@@ -63,7 +53,7 @@ export default function novel() {
           <span className="eightSeven">{nowSelect?.title}</span>
         </LinkWrapper>
         <IntroduceWrapper>
-          <NovelDetail nowSelect={{ html: nowSelect }} />
+          <NovelDetail />
           <PaddingLine />
           <DoingWrapper>
             <Link href={`/${novel}/synopsisList`}>
@@ -109,22 +99,28 @@ export default function novel() {
           </DoingWrapper>
           <PaddingLine />
           <div>
-            {me?.novelList.writing && (
-              <>
-                <h3>작성중인 회차</h3> <br />
-                <LoginChapterList incompleteChapters={incompleteChapters} />
-                <PaddingLine />
-              </>
-            )}
+            {!me?.novelList[novelIdx].writing ||
+              (me?.novelList[novelIdx].writing.text.length !== 0 && (
+                <>
+                  <h3>작성중인 회차</h3> <br />
+                  <LoginChapterList
+                    incompleteChapters={me?.novelList[novelIdx].writing}
+                  />
+                  <PaddingLine />
+                </>
+              ))}
 
             <h3>작성한 회차</h3>
             <br />
-            {completedChapters.map((fill) => (
-              <LoginChapterList
-                chapterTitle={fill.title}
-                wordCounts={fill.word}
-              />
-            ))}
+            {me?.novelList[novelIdx].written
+              .slice(0)
+              .reverse()
+              .map((fill) => (
+                <LoginChapterList
+                  chapterTitle={fill.title}
+                  wordCounts={fill.text}
+                />
+              ))}
           </div>
         </IntroduceWrapper>
       </MainDefault>

@@ -30,10 +30,13 @@ export default function LoginChapterList({
             </h3>{" "}
             {incompleteChapters ? (
               <span className="six">
-                {incompleteChapters.word} / {incompleteChapters.targetWords}{" "}
+                {incompleteChapters.text.length} /{" "}
+                {incompleteChapters.targetWords}{" "}
               </span>
             ) : (
-              <span className="six">{wordCounts}</span>
+              <span className="six" style={{ fontSize: "14px" }}>
+                {wordCounts.length}
+              </span>
             )}
           </div>
         </NovelList>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 export default function LoginChapterList({
@@ -6,6 +7,9 @@ export default function LoginChapterList({
   wordCounts,
   incompleteChapters,
 }) {
+  const state = useSelector((state) => state.userReducer);
+  const { me } = state;
+
   return (
     <>
       <NovelListWrapper>

@@ -31,6 +31,7 @@ export default function LoginModal({ setLoginModal }) {
           nickName: "taro",
           novelList: [
             {
+              id: 0,
               title: "깐돌이의 모험",
               picture: "http://placeimg.com/500/500/any",
               info: "깐돌이의 우당탕탕 모험기",
@@ -41,6 +42,7 @@ export default function LoginModal({ setLoginModal }) {
               written: { title: "1화", text: "몰?루" },
             },
             {
+              id: 1,
               title: "깐돌이의 모험 remaster",
               picture: "http://placeimg.com/500/500/arch",
               info: "새로운 그래픽으로 태어난 깐돌이의 우당탕탕 모험기",

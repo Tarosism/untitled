@@ -14,6 +14,11 @@ import LoginMainRecord from "./LoginMainRecord";
 export default function LoginMain() {
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
+  const dispatch = useDispatch();
+
+  const nowSelect = (fill) => {
+    dispatch;
+  };
 
   return (
     <>
@@ -24,7 +29,7 @@ export default function LoginMain() {
         <PaddingLine />
         <NovelListWrapper>
           {me.novelList.map((fill) => (
-            <Link href={`/${fill.title}`}>
+            <Link href={`/${fill.id}`}>
               <NovelList pic={fill.picture}>
                 <span>{fill.title}</span>
               </NovelList>

@@ -19,7 +19,6 @@ export default function EditableBlock() {
       ref.current.focus();
     }
   };
-
   const copyTextHandler = () => {
     const el = ref.current;
     setCopyText({ value: el.innerText, copied: true });

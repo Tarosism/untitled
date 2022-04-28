@@ -7,6 +7,7 @@ import {
   DoingWrapper,
   IntroduceWrapper,
 } from "../style/NovelMainStyle";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import styled from "styled-components";
 import NovelDetail from "../components/NovelDetail";
@@ -21,6 +22,12 @@ import LoginChapterList from "../components/LoginChapterList";
 export default function novel() {
   const router = useRouter();
   const { novel } = router.query;
+  const state = useSelector((state) => state.userReducer);
+  const { me } = state;
+
+  const nowSelect = me?.novelList.filter(
+    (fill) => fill.id === Number(novel)
+  )[0];
 
   const completedChapters = [
     { title: "2화 : 휴재", word: 1300 },
@@ -31,6 +38,7 @@ export default function novel() {
     targetWords: 3000,
     word: 1100,
   };
+  //me.novelList.map(fill) => fill.title etc...
 
   const [linkCount, setLinkCount] = useState(2);
   return (
@@ -47,15 +55,15 @@ export default function novel() {
                   className="threeEight"
                   style={{ fontSize: "14px" }}
                 />{" "}
-                양승준
+                {me?.nickName}
               </span>
             </Link>
           </div>
           {linkCount <= 2 && <span className="threeEight">/</span>}
-          <span className="eightSeven">{novel}</span>
+          <span className="eightSeven">{nowSelect?.title}</span>
         </LinkWrapper>
         <IntroduceWrapper>
-          <NovelDetail />
+          <NovelDetail nowSelect={{ html: nowSelect }} />
           <PaddingLine />
           <DoingWrapper>
             <Link href={`/${novel}/synopsisList`}>
@@ -101,9 +109,14 @@ export default function novel() {
           </DoingWrapper>
           <PaddingLine />
           <div>
-            <h3>작성중인 회차</h3> <br />
-            <LoginChapterList incompleteChapters={incompleteChapters} />
-            <PaddingLine />
+            {me?.novelList.writing && (
+              <>
+                <h3>작성중인 회차</h3> <br />
+                <LoginChapterList incompleteChapters={incompleteChapters} />
+                <PaddingLine />
+              </>
+            )}
+
             <h3>작성한 회차</h3>
             <br />
             {completedChapters.map((fill) => (

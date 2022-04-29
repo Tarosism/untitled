@@ -28,7 +28,6 @@ export default function novel() {
     )[0];
     dispatch(updateNowSelectAction(nowSelect));
   }, [novel]);
-  console.log(nowSelect);
   const novelIdx = me?.novelList.findIndex((fill) => fill.id === Number(novel));
   const [linkCount, setLinkCount] = useState(2);
   return (

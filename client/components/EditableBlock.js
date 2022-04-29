@@ -6,8 +6,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { synopsisTitleFixAction, synopsisTextFixAction } from "../reducer/user";
 import { convert } from "html-to-text";
 import { copyAction } from "../reducer/copyed";
+import styled from "styled-components";
 
 export default function EditableBlock({ nowSynopsis }) {
+  const [copyModal, setCopyModal] = useState(false);
   const ref = useRef();
 
   const dispatch = useDispatch();
@@ -18,22 +20,30 @@ export default function EditableBlock({ nowSynopsis }) {
       ref.current.focus();
     }
   };
+
   const textCounts = convert(nowSynopsis.text.html, {
     wordwrap: 130,
   });
-  const copyTextHandler = () => {
+  const copyTextHandler = (textCounts, result) => {
     dispatch(copyAction({ value: textCounts, copied: true }));
+    result && setCopyModal(true);
+    setTimeout(() => {
+      setCopyModal(false);
+    }, 2500);
   };
 
   return (
     <>
-      {" "}
+      {copyModal && (
+        <CopyAlert className="eightSeven">복사 되었습니다</CopyAlert>
+      )}
       <div
         style={{
           width: "31.25rem",
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
+          position: "relative",
         }}
       >
         <div style={{ textAlign: "end" }}>
@@ -49,7 +59,10 @@ export default function EditableBlock({ nowSynopsis }) {
           }}
         ></div>
         <div style={{ display: "flex", justifyContent: "end" }}>
-          <CopyToClipboard text={textCounts} onCopy={copyTextHandler}>
+          <CopyToClipboard
+            text={textCounts}
+            onCopy={(textCounts, result) => copyTextHandler(textCounts, result)}
+          >
             <CopyOutlined
               className="eightSeven"
               style={{
@@ -97,5 +110,21 @@ export default function EditableBlock({ nowSynopsis }) {
   );
 }
 
+const CopyAlert = styled.div`
+  width: 10rem;
+  height: 5rem;
+  background-color: #282828;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  border-radius: 3rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 70%);
+`;
 //저장을 html 객체로 함 -> 불러올 때 고대로 가져와서 contentEditable html에 넣음
 //결국 저 태그로만 저장하고 불러올 수 있는 애들임

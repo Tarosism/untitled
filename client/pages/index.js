@@ -6,6 +6,7 @@ import SignupModal from "../components/SignupModal";
 import LoginMain from "../components/LoginMain";
 import LoginNav from "../components/LoginNav";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
 
 export default function index() {
   const state = useSelector((state) => state.userReducer);

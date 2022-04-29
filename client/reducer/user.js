@@ -6,6 +6,7 @@ import {
   NOVEL_SELECTED,
   SYNOPSIS_TITLE_FIX,
   SYNOPSIS_TEXT_FIX,
+  ADD_SYNOPSIS,
 } from "./type";
 
 export const initalState = {
@@ -64,6 +65,13 @@ export const synopsisTextFixAction = (text, id) => {
     type: SYNOPSIS_TEXT_FIX,
     text,
     id,
+  };
+};
+
+export const addSynopsisAction = (data) => {
+  return {
+    type: ADD_SYNOPSIS,
+    data,
   };
 };
 
@@ -130,6 +138,17 @@ const userReducer = (state = initalState, action) => {
       return {
         ...state,
         me: { ...state.me, novelList: sTextArr },
+      };
+    case ADD_SYNOPSIS:
+      const sAddIdx = findIndexTool(
+        state.nowSelect.synopsis,
+        state.nowSelect.id
+      );
+      const sAddArr = [...state.me.novelList];
+      sAddArr[sAddIdx].synopsis.push(action.data);
+      return {
+        ...state,
+        me: { ...state.me, novelList: sAddArr },
       };
     default:
       return state;

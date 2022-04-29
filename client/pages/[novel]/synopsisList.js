@@ -14,17 +14,30 @@ import {
   ContainerOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
+import { addSynopsisAction } from "../../reducer/user";
 
 import LoginNav from "../../components/LoginNav";
 
 export default function synopsisList() {
   const router = useRouter();
   const { novel } = router.query;
+  const dispatch = useDispatch();
 
   const state = useSelector((state) => state.userReducer);
   const { me, nowSelect } = state;
 
   const [linkCount, setLinkCount] = useState(3);
+
+  const addSynopsis = () => {
+    const countId = nowSelect.synopsis[nowSelect.synopsis.length - 1].id + 1;
+    const data = {
+      id: countId,
+      title: { html: "" },
+      text: { html: "" },
+    };
+    dispatch(addSynopsisAction(data));
+    router.push(`/${novel}/synopsisList/${countId}`);
+  };
 
   return (
     <>
@@ -62,18 +75,18 @@ export default function synopsisList() {
               <NovelDoingSelect>
                 <ContainerOutlined
                   style={{ fontSize: "2.5rem" }}
-                  className="six"
+                  className="eightSeven"
                 />
                 <br />
-                {fill.title.html}
+                {fill.title.html ? fill.title.html : "무제"}
               </NovelDoingSelect>
             </Link>
           ))}
 
-          <NovelDoingSelect>
+          <NovelDoingSelect onClick={addSynopsis}>
             <PlusCircleOutlined
               style={{ fontSize: "2.5rem" }}
-              className="six"
+              className="threeEight"
             />
           </NovelDoingSelect>
         </DoingWrapper>

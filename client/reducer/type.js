@@ -6,3 +6,4 @@ export const NOVEL_SELECTED = "NOVEL_SELECTED";
 export const SYNOPSIS_TITLE_FIX = "SYNOPSIS_TITLE_FIX";
 export const SYNOPSIS_TEXT_FIX = "SYNOPSIS_TEXT_FIX";
 export const COPYED = "COPYED";
+export const ADD_SYNOPSIS = "ADD_SYNOPSIS";

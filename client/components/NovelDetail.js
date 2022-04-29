@@ -14,8 +14,10 @@ export default function NovelDetail() {
   const ref = useRef();
 
   useEffect(() => {
-    nowSelect && dispatch(novelTitleFixAction(nowSelect.title, novel));
-    nowSelect && dispatch(novelInfoFixAction(nowSelect.info, novel));
+    nowSelect &&
+      dispatch(novelTitleFixAction({ html: nowSelect.title.html }, novel));
+    nowSelect &&
+      dispatch(novelInfoFixAction({ html: nowSelect.info.html }, novel));
 
     //제목을 바꾸면 바로바로 수정되는 것을 위해 만들었음. useState 안 쓰기
     //+ 애당초 nowSelect는 redux에서 가져오는 것이기 때문에 여기서 상태를 바꿔주면 쟤도 바뀜
@@ -45,10 +47,10 @@ export default function NovelDetail() {
           <div>
             <ContentEditable
               className="eightSeven"
-              html={nowSelect?.title}
+              html={nowSelect?.title.html}
               disabled={false}
               onChange={(e) => {
-                dispatch(novelTitleFixAction(e.target.value, novel));
+                dispatch(novelTitleFixAction({ html: e.target.value }, novel));
               }}
               tagName="h2"
               placeholder={"무제"}
@@ -65,10 +67,10 @@ export default function NovelDetail() {
             <hr />
             <ContentEditable
               className="eightSeven"
-              html={nowSelect?.info}
+              html={nowSelect?.info.html}
               disabled={false}
               onChange={(e) => {
-                dispatch(novelInfoFixAction(e.target.value, novel));
+                dispatch(novelInfoFixAction({ html: e.target.value }, novel));
               }}
               tagName="div"
               placeholder={"작품 설명"}

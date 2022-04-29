@@ -4,3 +4,5 @@ export const NOVEL_TITLE_FIX = "NOVEL_TITLE_FIX";
 export const NOVEL_INFO_FIX = "NOVEL_INFO_FIX";
 export const NOVEL_SELECTED = "NOVEL_SELECTED";
 export const SYNOPSIS_TITLE_FIX = "SYNOPSIS_TITLE_FIX";
+export const SYNOPSIS_TEXT_FIX = "SYNOPSIS_TEXT_FIX";
+export const COPYED = "COPYED";

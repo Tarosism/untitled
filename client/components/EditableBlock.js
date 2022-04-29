@@ -3,16 +3,11 @@ import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
 import { CopyOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { synopsisTitleFixAction } from "../reducer/user";
+import { synopsisTitleFixAction, synopsisTextFixAction } from "../reducer/user";
+import { convert } from "html-to-text";
+import { copyAction } from "../reducer/copyed";
 
 export default function EditableBlock({ nowSynopsis }) {
-  const [text, setText] = useState({ html: "" });
-  const [title, setTitle] = useState({
-    html: "",
-  });
-  const [copyText, setCopyText] = useState({ value: "", copied: false });
-  const [textCounts, setTextCounts] = useState(0);
-
   const ref = useRef();
 
   const dispatch = useDispatch();
@@ -23,16 +18,11 @@ export default function EditableBlock({ nowSynopsis }) {
       ref.current.focus();
     }
   };
+  const textCounts = convert(nowSynopsis.text.html, {
+    wordwrap: 130,
+  });
   const copyTextHandler = () => {
-    const el = ref.current;
-    setCopyText({ value: el.innerText, copied: true });
-    //리덕스 쓰면 바로바로 됐던 걸로 기억을 합니다 아마.. 리덕스 들어가고 안되면 다시 하지 뭐
-  };
-
-  const countingText = () => {
-    const textCount = ref.current.innerText;
-    const counts = textCount.length;
-    setTextCounts(counts);
+    dispatch(copyAction({ value: textCounts, copied: true }));
   };
 
   return (
@@ -48,7 +38,7 @@ export default function EditableBlock({ nowSynopsis }) {
       >
         <div style={{ textAlign: "end" }}>
           <p className="six" style={{ margin: "0 1rem 1rem 1rem" }}>
-            {textCounts}
+            {textCounts.length}
           </p>
         </div>
         <div
@@ -59,7 +49,7 @@ export default function EditableBlock({ nowSynopsis }) {
           }}
         ></div>
         <div style={{ display: "flex", justifyContent: "end" }}>
-          <CopyToClipboard text={copyText.value} onCopy={copyTextHandler}>
+          <CopyToClipboard text={textCounts} onCopy={copyTextHandler}>
             <CopyOutlined
               className="eightSeven"
               style={{
@@ -70,17 +60,18 @@ export default function EditableBlock({ nowSynopsis }) {
                 borderRadius: "20%",
                 textAlign: "end",
               }}
-              onClick={copyTextHandler}
             />
           </CopyToClipboard>
         </div>
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={nowSynopsis.title}
+            html={nowSynopsis.title.html}
             disabled={false}
             onChange={(e) =>
-              dispatch(synopsisTitleFixAction(e.target.value, nowSynopsis.id))
+              dispatch(
+                synopsisTitleFixAction({ html: e.target.value }, nowSynopsis.id)
+              )
             }
             tagName="h2"
             placeholder={"무제"}
@@ -89,15 +80,16 @@ export default function EditableBlock({ nowSynopsis }) {
           <hr />
           <ContentEditable
             className="eightSeven blankText"
-            html={text.html}
+            html={nowSynopsis.text.html}
             disabled={false}
             onChange={(e) =>
-              setText((prev) => ({ ...prev, html: e.target.value }))
+              dispatch(
+                synopsisTextFixAction({ html: e.target.value }, nowSynopsis.id)
+              )
             }
             tagName="div"
             placeholder={"마음껏 보여주세요!"}
             innerRef={ref}
-            onKeyDown={countingText}
           />
         </div>
       </div>

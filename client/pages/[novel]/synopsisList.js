@@ -26,8 +26,6 @@ export default function synopsisList() {
 
   const [linkCount, setLinkCount] = useState(3);
 
-  const synopsisListBox = [`${novel} 1화 시놉시스`, `${novel} 2화 시놉시스`];
-
   return (
     <>
       <LoginNav />
@@ -48,7 +46,7 @@ export default function synopsisList() {
           </div>
           <span className="threeEight">/</span>
           <Link href={`/${novel}`}>
-            <span className="eightSeven">{nowSelect.title}</span>
+            <span className="eightSeven">{nowSelect.title.html}</span>
           </Link>
           {linkCount > 2 && (
             <>
@@ -67,7 +65,7 @@ export default function synopsisList() {
                   className="six"
                 />
                 <br />
-                {fill.title}
+                {fill.title.html}
               </NovelDoingSelect>
             </Link>
           ))}

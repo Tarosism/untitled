@@ -9,7 +9,7 @@ export default function LoginChapterList({
 }) {
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
-
+  console.log(wordCounts);
   return (
     <>
       <NovelListWrapper>
@@ -26,11 +26,13 @@ export default function LoginChapterList({
             }}
           >
             <h3>
-              {incompleteChapters ? incompleteChapters.title : chapterTitle}
+              {incompleteChapters
+                ? incompleteChapters.title.html
+                : chapterTitle}
             </h3>{" "}
             {incompleteChapters ? (
               <span className="six">
-                {incompleteChapters.text.length} /{" "}
+                {incompleteChapters.text.html.length} /{" "}
                 {incompleteChapters.targetWords}{" "}
               </span>
             ) : (

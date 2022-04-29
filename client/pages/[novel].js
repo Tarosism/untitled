@@ -28,7 +28,7 @@ export default function novel() {
     )[0];
     dispatch(updateNowSelectAction(nowSelect));
   }, [novel]);
-
+  console.log(nowSelect);
   const novelIdx = me?.novelList.findIndex((fill) => fill.id === Number(novel));
   const [linkCount, setLinkCount] = useState(2);
   return (
@@ -50,7 +50,7 @@ export default function novel() {
             </Link>
           </div>
           {linkCount <= 2 && <span className="threeEight">/</span>}
-          <span className="eightSeven">{nowSelect?.title}</span>
+          <span className="eightSeven">{nowSelect?.title.html}</span>
         </LinkWrapper>
         <IntroduceWrapper>
           <NovelDetail />
@@ -100,7 +100,7 @@ export default function novel() {
           <PaddingLine />
           <div>
             {!me?.novelList[novelIdx].writing ||
-              (me?.novelList[novelIdx].writing.text.length !== 0 && (
+              (me?.novelList[novelIdx].writing.text.html.length !== 0 && (
                 <>
                   <h3>작성중인 회차</h3> <br />
                   <LoginChapterList

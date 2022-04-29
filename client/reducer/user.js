@@ -5,6 +5,7 @@ import {
   NOVEL_INFO_FIX,
   NOVEL_SELECTED,
   SYNOPSIS_TITLE_FIX,
+  SYNOPSIS_TEXT_FIX,
 } from "./type";
 
 export const initalState = {
@@ -58,7 +59,18 @@ export const synopsisTitleFixAction = (title, id) => {
   };
 };
 
+export const synopsisTextFixAction = (text, id) => {
+  return {
+    type: SYNOPSIS_TEXT_FIX,
+    text,
+    id,
+  };
+};
+
 const userReducer = (state = initalState, action) => {
+  const findIndexTool = (arr, num) =>
+    arr.findIndex((fill) => fill.id === Number(num));
+
   switch (action.type) {
     case LOG_IN:
       return {
@@ -78,9 +90,7 @@ const userReducer = (state = initalState, action) => {
         nowSelect: action.select,
       };
     case NOVEL_TITLE_FIX:
-      const titleIdx = state.me.novelList.findIndex(
-        (fill) => fill.id === Number(action.id)
-      );
+      const titleIdx = findIndexTool(state.me.novelList, action.id);
       const titleFixArr = [...state.me.novelList];
       titleFixArr[titleIdx].title = action.title;
       return {
@@ -88,9 +98,7 @@ const userReducer = (state = initalState, action) => {
         me: { ...state.me, novelList: titleFixArr },
       };
     case NOVEL_INFO_FIX:
-      const infoIdx = state.me.novelList.findIndex(
-        (fill) => fill.id === Number(action.id)
-      );
+      const infoIdx = findIndexTool(state.me.novelList, action.id);
       const infoFixArr = [...state.me.novelList];
       infoFixArr[infoIdx].info = action.info;
       return {
@@ -98,19 +106,30 @@ const userReducer = (state = initalState, action) => {
         me: { ...state.me, novelList: infoFixArr },
       };
     case SYNOPSIS_TITLE_FIX:
-      const sTitleIdx = state.nowSelect.synopsis.findIndex(
-        (fill) => fill.id === Number(action.id)
-      );
-      const sTitleMatchNovel = state.me.novelList.findIndex(
-        (fill) => fill.id === state.nowSelect.id
+      const sTitleIdx = findIndexTool(state.nowSelect.synopsis, action.id);
+      const sTitleMatchNovel = findIndexTool(
+        state.me.novelList,
+        state.nowSelect.id
       );
       const sTitleArr = [...state.me.novelList];
       sTitleArr[sTitleMatchNovel].synopsis[sTitleIdx].title = action.title;
-      //이거 맨 위에 함수로 만들어서 찍어내도 되겠다. 내일은 그거 하자
-      //&nbsp로 띄어쓰기가 뜨는 것도 어떻게 없애냐
+
       return {
         ...state,
         me: { ...state.me, novelList: sTitleArr },
+      };
+    case SYNOPSIS_TEXT_FIX:
+      const sTextIdx = findIndexTool(state.nowSelect.synopsis, action.id);
+      const sTextMatchNovel = findIndexTool(
+        state.me.novelList,
+        state.nowSelect.id
+      );
+      const sTextArr = [...state.me.novelList];
+      sTextArr[sTextMatchNovel].synopsis[sTextIdx].text = action.text;
+
+      return {
+        ...state,
+        me: { ...state.me, novelList: sTextArr },
       };
     default:
       return state;

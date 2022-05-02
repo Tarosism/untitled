@@ -7,3 +7,6 @@ export const SYNOPSIS_TITLE_FIX = "SYNOPSIS_TITLE_FIX";
 export const SYNOPSIS_TEXT_FIX = "SYNOPSIS_TEXT_FIX";
 export const COPYED = "COPYED";
 export const ADD_SYNOPSIS = "ADD_SYNOPSIS";
+export const CHARA_NAME_FIX = "CHARA_NAME_FIX";
+export const CHARA_INFO_FIX = "CHARA_INFO_FIX";
+export const ADD_CHARA = "ADD_CHARA";

@@ -7,6 +7,9 @@ import {
   SYNOPSIS_TITLE_FIX,
   SYNOPSIS_TEXT_FIX,
   ADD_SYNOPSIS,
+  CHARA_NAME_FIX,
+  CHARA_INFO_FIX,
+  ADD_CHARA,
 } from "./type";
 
 export const initalState = {
@@ -71,6 +74,29 @@ export const synopsisTextFixAction = (text, id) => {
 export const addSynopsisAction = (data) => {
   return {
     type: ADD_SYNOPSIS,
+    data,
+  };
+};
+
+export const charaNameFixAction = (name, id) => {
+  return {
+    type: CHARA_NAME_FIX,
+    name,
+    id,
+  };
+};
+
+export const charaInfoFixAction = (info, id) => {
+  return {
+    type: CHARA_INFO_FIX,
+    info,
+    id,
+  };
+};
+
+export const addCharaAction = (data) => {
+  return {
+    type: ADD_CHARA,
     data,
   };
 };
@@ -146,6 +172,39 @@ const userReducer = (state = initalState, action) => {
       );
       const sAddArr = [...state.me.novelList];
       sAddArr[sAddIdx].synopsis.push(action.data);
+      return {
+        ...state,
+        me: { ...state.me, novelList: sAddArr },
+      };
+    case CHARA_NAME_FIX:
+      const cNameIdx = findIndexTool(state.nowSelect.chara, action.id);
+      const cNameMatchNovel = findIndexTool(
+        state.me.novelList,
+        state.nowSelect.id
+      );
+      const cNameArr = [...state.me.novelList];
+      cNameArr[cNameMatchNovel].chara[cNameIdx].name = action.name;
+      return {
+        ...state,
+        me: { ...state.me, novelList: cNameArr },
+      };
+    case CHARA_INFO_FIX:
+      const cInfoIdx = findIndexTool(state.nowSelect.chara, action.id);
+      const cInfoMatchNovel = findIndexTool(
+        state.me.novelList,
+        state.nowSelect.id
+      );
+      const cInfoArr = [...state.me.novelList];
+      cInfoArr[cInfoMatchNovel].chara[cInfoIdx].info = action.info;
+
+      return {
+        ...state,
+        me: { ...state.me, novelList: cInfoArr },
+      };
+    case ADD_CHARA:
+      const cAddIdx = findIndexTool(state.nowSelect.chara, state.nowSelect.id);
+      const cAddArr = [...state.me.novelList];
+      cAddArr[cAddIdx].synopsis.push(action.data);
       return {
         ...state,
         me: { ...state.me, novelList: sAddArr },

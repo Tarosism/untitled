@@ -42,7 +42,7 @@ export default function synopsis() {
             </div>
             <span className="threeEight">/</span>
             <Link href={`/${novel}`}>
-              <span className="eightSeven">{nowSelect.title}</span>
+              <span className="eightSeven">{nowSelect.title.html}</span>
             </Link>
             {linkCount > 2 && (
               <>
@@ -51,7 +51,7 @@ export default function synopsis() {
                   <span className="eightSeven">시놉시스</span>
                 </Link>
                 <span className="threeEight">/</span>
-                <span className="eightSeven">{nowSynopsis.title}</span>
+                <span className="eightSeven">{nowSynopsis.title.html}</span>
               </>
             )}
           </LinkWrapper>

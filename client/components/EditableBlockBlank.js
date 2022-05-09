@@ -1,21 +1,18 @@
 import React, { useState, useRef } from "react";
 import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
+import { blankNameAction, blankTextAction } from "../reducer/user";
 import { CopyOutlined } from "@ant-design/icons";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { synopsisTitleFixAction, synopsisTextFixAction } from "../reducer/user";
 import { convert } from "html-to-text";
 import { copyAction } from "../reducer/copyed";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import styled from "styled-components";
 
-export default function EditableBlock({ nowSynopsis }) {
-  // const [propData, setPropData] = useState(null)
-  // if(nowSynopsis) setPropData(nowSynopsis)
-  // if(nowChara) setPropData(nowChara)
-
-  const [copyModal, setCopyModal] = useState(false);
+export default function EditableBlock({ nowBlank }) {
   const ref = useRef();
 
+  const [copyModal, setCopyModal] = useState(false);
   const dispatch = useDispatch();
 
   const onKeyDownHandler = (e) => {
@@ -25,7 +22,7 @@ export default function EditableBlock({ nowSynopsis }) {
     }
   };
 
-  const textCounts = convert(nowSynopsis?.text.html, {
+  const textCounts = convert(nowBlank?.text.html, {
     wordwrap: 130,
   });
   const copyTextHandler = (textCounts, result) => {
@@ -50,11 +47,6 @@ export default function EditableBlock({ nowSynopsis }) {
           position: "relative",
         }}
       >
-        <div style={{ textAlign: "end" }}>
-          <p className="six" style={{ margin: "0 1rem 1rem 1rem" }}>
-            {textCounts.length}
-          </p>
-        </div>
         <div
           style={{
             display: "flex",
@@ -83,12 +75,10 @@ export default function EditableBlock({ nowSynopsis }) {
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={nowSynopsis.title.html}
+            html={nowBlank.title.html}
             disabled={false}
             onChange={(e) =>
-              dispatch(
-                synopsisTitleFixAction({ html: e.target.value }, nowSynopsis.id)
-              )
+              dispatch(blankNameAction({ html: e.target.value }))
             }
             tagName="h2"
             placeholder={"무제"}
@@ -97,12 +87,10 @@ export default function EditableBlock({ nowSynopsis }) {
           <hr />
           <ContentEditable
             className="eightSeven blankText"
-            html={nowSynopsis.text.html}
+            html={nowBlank.text.html}
             disabled={false}
             onChange={(e) =>
-              dispatch(
-                synopsisTextFixAction({ html: e.target.value }, nowSynopsis.id)
-              )
+              dispatch(blankTextAction({ html: e.target.value }))
             }
             tagName="div"
             placeholder={"마음껏 보여주세요!"}

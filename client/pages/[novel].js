@@ -13,7 +13,7 @@ import NovelDetail from "../components/NovelDetail";
 import { NovelDoingSelect, PaddingLine } from "../style/MainStyle";
 import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
 import LoginChapterList from "../components/LoginChapterList";
-import { updateNowSelectAction } from "../reducer/user";
+import { updateNowSelectAction, addBlankAction } from "../reducer/user";
 
 export default function novel() {
   const router = useRouter();
@@ -28,9 +28,14 @@ export default function novel() {
     )[0];
     dispatch(updateNowSelectAction(nowSelect));
   }, [novel]);
-
   const novelIdx = me?.novelList.findIndex((fill) => fill.id === Number(novel));
   const [linkCount, setLinkCount] = useState(2);
+
+  const addBlank = () => {
+    dispatch(addBlankAction());
+    router.push(`/${novel}/blank`);
+  };
+
   return (
     <>
       <LoginNav />
@@ -50,7 +55,7 @@ export default function novel() {
             </Link>
           </div>
           {linkCount <= 2 && <span className="threeEight">/</span>}
-          <span className="eightSeven">{nowSelect?.title}</span>
+          <span className="eightSeven">{nowSelect?.title.html}</span>
         </LinkWrapper>
         <IntroduceWrapper>
           <NovelDetail />
@@ -86,7 +91,7 @@ export default function novel() {
                 세계관
               </NovelDoingSelect>
             </Link>
-            <Link href={`/${novel}/blank`}>
+            <div onClick={addBlank}>
               <NovelDoingSelect>
                 <ContainerOutlined
                   style={{ fontSize: "2.5rem" }}
@@ -95,12 +100,12 @@ export default function novel() {
                 <br />
                 소설쓰기
               </NovelDoingSelect>
-            </Link>
+            </div>
           </DoingWrapper>
           <PaddingLine />
           <div>
             {!me?.novelList[novelIdx].writing ||
-              (me?.novelList[novelIdx].writing.text.length !== 0 && (
+              (me?.novelList[novelIdx].writing.text.html.length !== 0 && (
                 <>
                   <h3>작성중인 회차</h3> <br />
                   <LoginChapterList
@@ -117,8 +122,8 @@ export default function novel() {
               .reverse()
               .map((fill) => (
                 <LoginChapterList
-                  chapterTitle={fill.title}
-                  wordCounts={fill.text}
+                  chapterTitle={fill.title.html}
+                  wordCounts={fill.text.html}
                 />
               ))}
           </div>

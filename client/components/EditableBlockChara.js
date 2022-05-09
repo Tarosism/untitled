@@ -3,17 +3,16 @@ import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
 import { CopyOutlined } from "@ant-design/icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { synopsisTitleFixAction, synopsisTextFixAction } from "../reducer/user";
+import { charaNameFixAction, charaInfoFixAction } from "../reducer/user";
 import { convert } from "html-to-text";
 import { copyAction } from "../reducer/copyed";
 import styled from "styled-components";
 
-export default function EditableBlock({ nowSynopsis }) {
+export default function EditableBlock({ nowChara }) {
   // const [propData, setPropData] = useState(null)
   // if(nowSynopsis) setPropData(nowSynopsis)
   // if(nowChara) setPropData(nowChara)
 
-  const [copyModal, setCopyModal] = useState(false);
   const ref = useRef();
 
   const dispatch = useDispatch();
@@ -25,22 +24,8 @@ export default function EditableBlock({ nowSynopsis }) {
     }
   };
 
-  const textCounts = convert(nowSynopsis?.text.html, {
-    wordwrap: 130,
-  });
-  const copyTextHandler = (textCounts, result) => {
-    dispatch(copyAction({ value: textCounts, copied: true }));
-    result && setCopyModal(true);
-    setTimeout(() => {
-      setCopyModal(false);
-    }, 2500);
-  };
-
   return (
     <>
-      {copyModal && (
-        <CopyAlert className="eightSeven">복사 되었습니다</CopyAlert>
-      )}
       <div
         style={{
           width: "31.25rem",
@@ -50,11 +35,6 @@ export default function EditableBlock({ nowSynopsis }) {
           position: "relative",
         }}
       >
-        <div style={{ textAlign: "end" }}>
-          <p className="six" style={{ margin: "0 1rem 1rem 1rem" }}>
-            {textCounts.length}
-          </p>
-        </div>
         <div
           style={{
             display: "flex",
@@ -62,32 +42,14 @@ export default function EditableBlock({ nowSynopsis }) {
             padding: "0 1rem 1rem 1rem",
           }}
         ></div>
-        <div style={{ display: "flex", justifyContent: "end" }}>
-          <CopyToClipboard
-            text={textCounts}
-            onCopy={(textCounts, result) => copyTextHandler(textCounts, result)}
-          >
-            <CopyOutlined
-              className="eightSeven"
-              style={{
-                fontSize: "1.5rem",
-                cursor: "pointer",
-                padding: "0.25rem",
-                border: "1px solid rgba(255,255,255, 60%)",
-                borderRadius: "20%",
-                textAlign: "end",
-              }}
-            />
-          </CopyToClipboard>
-        </div>
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={nowSynopsis.title.html}
+            html={nowChara.name.html}
             disabled={false}
             onChange={(e) =>
               dispatch(
-                synopsisTitleFixAction({ html: e.target.value }, nowSynopsis.id)
+                charaNameFixAction({ html: e.target.value }, nowChara.id)
               )
             }
             tagName="h2"
@@ -97,11 +59,11 @@ export default function EditableBlock({ nowSynopsis }) {
           <hr />
           <ContentEditable
             className="eightSeven blankText"
-            html={nowSynopsis.text.html}
+            html={nowChara.info.html}
             disabled={false}
             onChange={(e) =>
               dispatch(
-                synopsisTextFixAction({ html: e.target.value }, nowSynopsis.id)
+                charaInfoFixAction({ html: e.target.value }, nowChara.id)
               )
             }
             tagName="div"

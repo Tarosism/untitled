@@ -3,15 +3,23 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { LinkWrapper } from "../../../style/NovelMainStyle";
-import EditableBlock from "../../../components/EditableBlock";
+import EditableBlockChara from "../../../components/EditableBlockChara";
 import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
 import BlankNav from "../../../components/BlankNav";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function chara() {
   const router = useRouter();
   const { chara, novel } = router.query;
+  const dispatch = useDispatch();
+
+  const state = useSelector((state) => state.userReducer);
+  const { me, nowSelect } = state;
 
   const [linkCount, setLinkCount] = useState(3);
+
+  const idx = nowSelect.chara.findIndex((fill) => fill.id === Number(chara));
+  const nowChara = nowSelect.chara[idx];
 
   return (
     <>
@@ -27,13 +35,13 @@ export default function chara() {
                     className="threeEight"
                     style={{ fontSize: "14px" }}
                   />{" "}
-                  양승준
+                  {me?.nickName}
                 </span>
               </Link>
             </div>
             <span className="threeEight">/</span>
             <Link href={`/${novel}`}>
-              <span className="eightSeven">{novel}</span>
+              <span className="eightSeven">{nowSelect.title.html}</span>
             </Link>
             {linkCount > 2 && (
               <>
@@ -42,13 +50,13 @@ export default function chara() {
                   <span className="eightSeven">캐릭터</span>
                 </Link>
                 <span className="threeEight">/</span>
-                <span className="eightSeven">{chara}</span>
+                <span className="eightSeven">{nowChara.name.html}</span>
               </>
             )}
           </LinkWrapper>
 
           <EditableBlockWrapper>
-            <EditableBlock />
+            <EditableBlockChara nowChara={nowChara} />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>

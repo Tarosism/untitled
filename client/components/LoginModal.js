@@ -32,52 +32,87 @@ export default function LoginModal({ setLoginModal }) {
           novelList: [
             {
               id: 0,
-              title: "깐돌이의 모험",
+              title: { html: "깐돌이의 모험" },
               picture: "http://placeimg.com/500/500/any",
-              info: "깐돌이의 우당탕탕 모험기",
-              synopsis: [
-                { id: 0, title: "1화 시놉스시", text: "부힛 부히힛 키시시~" },
-              ],
-              chara: [{ id: 0, name: "김깐돌", info: "귀염둥이 깐돌이" }],
-              worldview: "장엄하고 커다란 세계",
-              writing: null,
-              written: [{ id: 0, title: "1화: 깐돌스의 모험", text: "몰?루" }],
-            },
-            {
-              id: 1,
-              title: "깐돌이의 모험 remaster",
-              picture: "http://placeimg.com/500/500/arch",
-              info: "새로운 그래픽으로 태어난 깐돌이의 우당탕탕 모험기",
+              info: { html: "깐돌이의 우당탕탕 모험기" },
               synopsis: [
                 {
                   id: 0,
-                  title: "프롤로그 시놉스시",
-                  text: "우효~~~ 겟또다제~",
+                  title: { html: "1화 시놉스시" },
+                  text: { html: "부힛 부히힛 키시시~" },
                 },
-                { id: 1, title: "1화 시놉스시", text: "헤헤헿" },
               ],
               chara: [
-                { id: 0, name: "김깐돌", info: "버전업된 귀염둥이 깐돌이" },
                 {
-                  id: 1,
-                  name: "고귀한 막시무스 1세",
-                  info: "그는 고귀했습니다",
+                  id: 0,
+                  name: { html: "김깐돌" },
+                  info: { html: "귀염둥이 깐돌이" },
                 },
               ],
-              worldview: "더 놀라워진 장엄하고 커다란 세계",
-              writing: { title: "2화: 휴재", text: "무야홍" },
+              worldview: { title: { html: "" }, text: { html: "" } },
+              writing: null,
               written: [
-                { id: 0, title: "1화: 리마스터의 모험", text: "몰?루" },
+                {
+                  id: 0,
+                  title: { html: "1화: 깐돌스의 모험" },
+                  text: { html: "몰?루" },
+                },
+              ],
+            },
+            {
+              id: 1,
+              title: { html: "깐돌이의 모험 remaster" },
+              picture: "http://placeimg.com/500/500/arch",
+              info: {
+                html: "새로운 그래픽으로 태어난 깐돌이의 우당탕탕 모험기",
+              },
+              synopsis: [
+                {
+                  id: 0,
+                  title: { html: "프롤로그 시놉스시" },
+                  text: { html: "우효~~~ 겟또다제~" },
+                },
                 {
                   id: 1,
-                  title: "1.2화: 분량조절 실패",
-                  text: "꿀루asdadadadadadadadasdadadada",
+                  title: { html: "1화 시놉스시" },
+                  text: { html: "헤헤헿" },
+                },
+              ],
+              chara: [
+                {
+                  id: 0,
+                  name: { html: "김깐돌" },
+                  info: { html: "버전업된 귀염둥이 깐돌이" },
+                },
+                {
+                  id: 1,
+                  name: { html: "고귀한 막시무스 1세" },
+                  info: { html: "그는 고귀했습니다" },
+                },
+              ],
+              worldview: {
+                title: { html: "업그레이드" },
+                text: { html: "니나노" },
+              },
+              writing: {
+                title: { html: "2화: 휴재" },
+                text: { html: "무야홍" },
+              },
+              written: [
+                {
+                  id: 0,
+                  title: { html: "1화: 리마스터의 모험" },
+                  text: { html: "몰?루" },
+                },
+                {
+                  id: 1,
+                  title: { html: "1.2화: 분량조절 실패" },
+                  text: { html: "꿀루asdadadadadadadadasdadadada" },
                 },
               ],
             },
           ],
           record: { words: 12, charaCounts: 1, chapters: 1 },
-          nowSelect: null,
         })
       );
     }

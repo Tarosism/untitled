@@ -32,7 +32,7 @@ export default function LoginMain() {
           {me.novelList.map((fill) => (
             <Link href={`/${fill.id}`}>
               <NovelList pic={fill.picture}>
-                <span>{fill.title}</span>
+                <span>{fill.title.html}</span>
               </NovelList>
             </Link>
           ))}

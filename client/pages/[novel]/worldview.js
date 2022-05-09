@@ -3,14 +3,17 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { LinkWrapper } from "../../style/NovelMainStyle";
-import EditableBlock from "../../components/EditableBlock";
+import EditableBlockWorldview from "../../components/EditableBlockWorldview";
+import { useSelector, useDispatch } from "react-redux";
 import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
-import { PaddingLine } from "../../style/NovelMainStyle";
 import BlankNav from "../../components/BlankNav";
 
 export default function worldview() {
   const router = useRouter();
   const { novel } = router.query;
+
+  const state = useSelector((state) => state.userReducer);
+  const { me, nowSelect } = state;
 
   const [linkCount, setLinkCount] = useState(3);
 
@@ -28,13 +31,13 @@ export default function worldview() {
                     className="threeEight"
                     style={{ fontSize: "14px" }}
                   />{" "}
-                  양승준
+                  {me?.nickName}
                 </span>
               </Link>
             </div>
             <span className="threeEight">/</span>
             <Link href={`/${novel}`}>
-              <span className="eightSeven">{novel}</span>
+              <span className="eightSeven">{nowSelect.title.html}</span>
             </Link>
             {linkCount > 2 && (
               <>
@@ -45,7 +48,7 @@ export default function worldview() {
           </LinkWrapper>
 
           <EditableBlockWrapper>
-            <EditableBlock />
+            <EditableBlockWorldview worldview={nowSelect.worldview} />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>

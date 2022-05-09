@@ -14,6 +14,7 @@ import {
   ContainerOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
+import { addCharaAction } from "../../reducer/user";
 
 import LoginNav from "../../components/LoginNav";
 
@@ -26,6 +27,17 @@ export default function charaList() {
   const { me, nowSelect } = state;
 
   const [linkCount, setLinkCount] = useState(3);
+
+  const addChara = () => {
+    const countId = nowSelect.chara[nowSelect.chara.length - 1].id + 1;
+    const data = {
+      id: countId,
+      name: { html: "" },
+      info: { html: "" },
+    };
+    dispatch(addCharaAction(data));
+    router.push(`/${novel}/charaList/${countId}`);
+  };
 
   return (
     <>
@@ -71,7 +83,7 @@ export default function charaList() {
             </Link>
           ))}
 
-          <NovelDoingSelect>
+          <NovelDoingSelect onClick={addChara}>
             <PlusCircleOutlined
               style={{ fontSize: "2.5rem" }}
               className="six"

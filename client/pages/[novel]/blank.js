@@ -3,14 +3,17 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { LinkWrapper } from "../../style/NovelMainStyle";
-import EditableBlock from "../../components/EditableBlock";
-import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
-import { PaddingLine } from "../../style/NovelMainStyle";
+import EditableBlockBlank from "../../components/EditableBlockBlank";
+import { useSelector } from "react-redux";
+import { LeftOutlined } from "@ant-design/icons";
 import BlankNav from "../../components/BlankNav";
 
 export default function blank() {
   const router = useRouter();
   const { novel } = router.query;
+
+  const state = useSelector((state) => state.userReducer);
+  const { me, nowSelect } = state;
 
   const [linkCount, setLinkCount] = useState(3);
 
@@ -28,24 +31,26 @@ export default function blank() {
                     className="threeEight"
                     style={{ fontSize: "14px" }}
                   />{" "}
-                  양승준
+                  {me?.nickName}
                 </span>
               </Link>
             </div>
             <span className="threeEight">/</span>
             <Link href={`/${novel}`}>
-              <span className="eightSeven">{novel}</span>
+              <span className="eightSeven">{nowSelect.title.html}</span>
             </Link>
             {linkCount > 2 && (
               <>
                 <span className="threeEight">/</span>
-                <span className="eightSeven">title</span>
+                <span className="eightSeven">
+                  {nowSelect.writing.title.html}
+                </span>
               </>
             )}
           </LinkWrapper>
 
           <EditableBlockWrapper>
-            <EditableBlock />
+            <EditableBlockBlank nowBlank={nowSelect.writing} />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>

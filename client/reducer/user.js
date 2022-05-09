@@ -10,6 +10,11 @@ import {
   CHARA_NAME_FIX,
   CHARA_INFO_FIX,
   ADD_CHARA,
+  WORLDVIEW_NAME_FIX,
+  WORLDVIEW_TEXT_FIX,
+  BLANK_TITLE_FIX,
+  BLANK_TEXT_FIX,
+  ADD_BLANK,
 } from "./type";
 
 export const initalState = {
@@ -98,6 +103,37 @@ export const addCharaAction = (data) => {
   return {
     type: ADD_CHARA,
     data,
+  };
+};
+
+export const worldviewNameAction = (title) => {
+  return {
+    type: WORLDVIEW_NAME_FIX,
+    title,
+  };
+};
+
+export const worldviewTextAction = (text) => {
+  return {
+    type: WORLDVIEW_TEXT_FIX,
+    text,
+  };
+};
+export const blankNameAction = (title) => {
+  return {
+    type: BLANK_TITLE_FIX,
+    title,
+  };
+};
+export const blankTextAction = (text) => {
+  return {
+    type: BLANK_TEXT_FIX,
+    text,
+  };
+};
+export const addBlankAction = () => {
+  return {
+    type: ADD_BLANK,
   };
 };
 
@@ -204,10 +240,51 @@ const userReducer = (state = initalState, action) => {
     case ADD_CHARA:
       const cAddIdx = findIndexTool(state.nowSelect.chara, state.nowSelect.id);
       const cAddArr = [...state.me.novelList];
-      cAddArr[cAddIdx].synopsis.push(action.data);
+      cAddArr[cAddIdx].chara.push(action.data);
       return {
         ...state,
-        me: { ...state.me, novelList: sAddArr },
+        me: { ...state.me, novelList: cAddArr },
+      };
+    case WORLDVIEW_NAME_FIX:
+      const wTitleIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const wTitleArr = [...state.me.novelList];
+      wTitleArr[wTitleIdx].worldview.title = action.title;
+      return {
+        ...state,
+        me: { ...state.me, novelList: wTitleArr },
+      };
+    case WORLDVIEW_TEXT_FIX:
+      const wTextIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const wTextArr = [...state.me.novelList];
+      wTextArr[wTextIdx].worldview.text = action.text;
+      return {
+        ...state,
+        me: { ...state.me, novelList: wTextArr },
+      };
+    case BLANK_TITLE_FIX:
+      const bTitleIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const bTitleArr = [...state.me.novelList];
+      bTitleArr[bTitleIdx].writing.title = action.title;
+      return {
+        ...state,
+        me: { ...state.me, novelList: bTitleArr },
+      };
+    case BLANK_TEXT_FIX:
+      const bTextIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const bTextArr = [...state.me.novelList];
+      bTextArr[bTextIdx].writing.text = action.text;
+      return {
+        ...state,
+        me: { ...state.me, novelList: bTextArr },
+      };
+    case ADD_BLANK:
+      const bAddIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const bAddArr = [...state.me.novelList];
+      bAddArr[bAddIdx].written.push(state.nowSelect.writing);
+      bAddArr[bAddIdx].writing = { title: { html: "" }, text: { html: "" } };
+      return {
+        ...state,
+        me: { ...state.me, novelList: bAddArr },
       };
     default:
       return state;

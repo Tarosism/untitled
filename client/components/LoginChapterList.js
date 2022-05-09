@@ -9,7 +9,6 @@ export default function LoginChapterList({
 }) {
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
-  console.log(wordCounts);
   return (
     <>
       <NovelListWrapper>
@@ -27,7 +26,9 @@ export default function LoginChapterList({
           >
             <h3>
               {incompleteChapters
-                ? incompleteChapters.title.html
+                ? incompleteChapters.title.html.length === 0
+                  ? "제목없음"
+                  : incompleteChapters.title.html
                 : chapterTitle}
             </h3>{" "}
             {incompleteChapters ? (

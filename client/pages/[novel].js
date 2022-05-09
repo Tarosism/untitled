@@ -13,7 +13,7 @@ import NovelDetail from "../components/NovelDetail";
 import { NovelDoingSelect, PaddingLine } from "../style/MainStyle";
 import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
 import LoginChapterList from "../components/LoginChapterList";
-import { updateNowSelectAction } from "../reducer/user";
+import { updateNowSelectAction, addBlankAction } from "../reducer/user";
 
 export default function novel() {
   const router = useRouter();
@@ -30,6 +30,12 @@ export default function novel() {
   }, [novel]);
   const novelIdx = me?.novelList.findIndex((fill) => fill.id === Number(novel));
   const [linkCount, setLinkCount] = useState(2);
+
+  const addBlank = () => {
+    dispatch(addBlankAction());
+    router.push(`/${novel}/blank`);
+  };
+
   return (
     <>
       <LoginNav />
@@ -85,7 +91,7 @@ export default function novel() {
                 세계관
               </NovelDoingSelect>
             </Link>
-            <Link href={`/${novel}/blank`}>
+            <div onClick={addBlank}>
               <NovelDoingSelect>
                 <ContainerOutlined
                   style={{ fontSize: "2.5rem" }}
@@ -94,7 +100,7 @@ export default function novel() {
                 <br />
                 소설쓰기
               </NovelDoingSelect>
-            </Link>
+            </div>
           </DoingWrapper>
           <PaddingLine />
           <div>
@@ -116,8 +122,8 @@ export default function novel() {
               .reverse()
               .map((fill) => (
                 <LoginChapterList
-                  chapterTitle={fill.title}
-                  wordCounts={fill.text}
+                  chapterTitle={fill.title.html}
+                  wordCounts={fill.text.html}
                 />
               ))}
           </div>

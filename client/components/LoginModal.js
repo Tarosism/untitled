@@ -49,9 +49,15 @@ export default function LoginModal({ setLoginModal }) {
                   info: { html: "귀염둥이 깐돌이" },
                 },
               ],
-              worldview: { html: "장엄하고 커다란 세계" },
+              worldview: { title: { html: "" }, text: { html: "" } },
               writing: null,
-              written: [{ id: 0, title: "1화: 깐돌스의 모험", text: "몰?루" }],
+              written: [
+                {
+                  id: 0,
+                  title: { html: "1화: 깐돌스의 모험" },
+                  text: { html: "몰?루" },
+                },
+              ],
             },
             {
               id: 1,
@@ -84,23 +90,29 @@ export default function LoginModal({ setLoginModal }) {
                   info: { html: "그는 고귀했습니다" },
                 },
               ],
-              worldview: { html: "더 놀라워진 장엄하고 커다란 세계" },
+              worldview: {
+                title: { html: "업그레이드" },
+                text: { html: "니나노" },
+              },
               writing: {
                 title: { html: "2화: 휴재" },
                 text: { html: "무야홍" },
               },
               written: [
-                { id: 0, title: "1화: 리마스터의 모험", text: "몰?루" },
+                {
+                  id: 0,
+                  title: { html: "1화: 리마스터의 모험" },
+                  text: { html: "몰?루" },
+                },
                 {
                   id: 1,
-                  title: "1.2화: 분량조절 실패",
-                  text: "꿀루asdadadadadadadadasdadadada",
+                  title: { html: "1.2화: 분량조절 실패" },
+                  text: { html: "꿀루asdadadadadadadadasdadadada" },
                 },
               ],
             },
           ],
           record: { words: 12, charaCounts: 1, chapters: 1 },
-          nowSelect: null,
         })
       );
     }

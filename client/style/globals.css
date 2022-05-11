@@ -201,3 +201,7 @@ hr {
 [contenteditable="true"]:focus-visible {
   outline: none;
 }
+
+.widthsf {
+  width: 75%;
+}

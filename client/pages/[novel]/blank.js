@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { LinkWrapper, PaddingLine } from "../../style/NovelMainStyle";
+import { LinkWrapperBlank, PaddingLine } from "../../style/NovelMainStyle";
 import EditableBlockBlank from "../../components/EditableBlockBlank";
 import { useSelector, useDispatch } from "react-redux";
 import { LeftOutlined } from "@ant-design/icons";
@@ -11,6 +11,7 @@ import { convert } from "html-to-text";
 import { copyAction } from "../../reducer/copyed";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CopyOutlined } from "@ant-design/icons";
+import { pageSelectAction } from "../../reducer/user";
 
 export default function blank() {
   const router = useRouter();
@@ -31,8 +32,11 @@ export default function blank() {
     result && setCopyModal(true);
     setTimeout(() => {
       setCopyModal(false);
-    }, 2500);
+    }, 1500);
   };
+  useEffect(() => {
+    dispatch(pageSelectAction("blank"));
+  }, []);
 
   return (
     <>
@@ -42,7 +46,7 @@ export default function blank() {
       <BlankWrapper>
         <BlankNav />
         <BlackMain>
-          <LinkWrapper>
+          <LinkWrapperBlank>
             <div
               style={{
                 display: "flex",
@@ -134,7 +138,7 @@ export default function blank() {
                 }}
               ></div>
             </div>
-          </LinkWrapper>
+          </LinkWrapperBlank>
 
           <EditableBlockWrapper>
             <PaddingLine />

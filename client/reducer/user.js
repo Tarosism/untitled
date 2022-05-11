@@ -15,6 +15,7 @@ import {
   BLANK_TITLE_FIX,
   BLANK_TEXT_FIX,
   ADD_BLANK,
+  PAGE_SELECT,
 } from "./type";
 
 export const initalState = {
@@ -22,6 +23,7 @@ export const initalState = {
   me: null,
   record: null,
   nowSelect: null,
+  inPage: "",
 };
 
 export const loginAction = (data) => {
@@ -134,6 +136,12 @@ export const blankTextAction = (text) => {
 export const addBlankAction = () => {
   return {
     type: ADD_BLANK,
+  };
+};
+export const pageSelectAction = (page) => {
+  return {
+    type: PAGE_SELECT,
+    page,
   };
 };
 
@@ -289,6 +297,11 @@ const userReducer = (state = initalState, action) => {
       return {
         ...state,
         me: { ...state.me, novelList: bAddArr },
+      };
+    case PAGE_SELECT:
+      return {
+        ...state,
+        inPage: action.page,
       };
     default:
       return state;

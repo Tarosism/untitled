@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+
 import { DashOutlined } from "@ant-design/icons";
 
 export default function BlankNav() {
   const [sideOpen, setSideOpen] = useState(false);
 
+  const state = useSelector((state) => state.userReducer);
+  const { me, nowSelect } = state;
+  const dispatch = useDispatch();
+
   const sideOpenHandler = () => {
     setSideOpen((prev) => !prev);
   };
-
   return (
     <>
       <SidebarWrapper>
@@ -18,9 +23,7 @@ export default function BlankNav() {
           <DashOutlined className="six" />
         </Sidebar>
         {sideOpen && (
-          <ClickedSidebar>
-            어떻게 하면 저장된 세계관과 캐릭터를 그대로 불러올 수 있을까?
-          </ClickedSidebar>
+          <ClickedSidebar>{nowSelect.worldview.text.html}</ClickedSidebar>
         )}
       </SidebarWrapper>
     </>

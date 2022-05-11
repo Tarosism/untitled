@@ -38,9 +38,6 @@ export default function EditableBlock({ nowSynopsis }) {
 
   return (
     <>
-      {copyModal && (
-        <CopyAlert className="eightSeven">복사 되었습니다</CopyAlert>
-      )}
       <div
         style={{
           width: "31.25rem",
@@ -114,21 +111,5 @@ export default function EditableBlock({ nowSynopsis }) {
   );
 }
 
-const CopyAlert = styled.div`
-  width: 10rem;
-  height: 5rem;
-  background-color: #282828;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99;
-  border-radius: 3rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 70%);
-`;
 //저장을 html 객체로 함 -> 불러올 때 고대로 가져와서 contentEditable html에 넣음
 //결국 저 태그로만 저장하고 불러올 수 있는 애들임

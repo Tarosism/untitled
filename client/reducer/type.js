@@ -15,3 +15,4 @@ export const WORLDVIEW_TEXT_FIX = "WORLDVIEW_TEXT_FIX";
 export const BLANK_TITLE_FIX = "BLANK_TITLE_FIX";
 export const BLANK_TEXT_FIX = "BLANK_TEXT_FIX";
 export const ADD_BLANK = "ADD_BLANK";
+export const PAGE_SELECT = "PAGE_SELECT";

@@ -280,8 +280,12 @@ const userReducer = (state = initalState, action) => {
     case ADD_BLANK:
       const bAddIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
       const bAddArr = [...state.me.novelList];
-      bAddArr[bAddIdx].written.push(state.nowSelect.writing);
-      bAddArr[bAddIdx].writing = { title: { html: "" }, text: { html: "" } };
+      if (bAddArr[bAddIdx].writing === null) {
+        bAddArr[bAddIdx].writing = { title: { html: "" }, text: { html: "" } };
+      } else {
+        bAddArr[bAddIdx].written.push(state.nowSelect.writing);
+        bAddArr[bAddIdx].writing = { title: { html: "" }, text: { html: "" } };
+      }
       return {
         ...state,
         me: { ...state.me, novelList: bAddArr },

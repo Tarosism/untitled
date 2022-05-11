@@ -1,17 +1,25 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 export default function LoginChapterList({
   chapterTitle,
   wordCounts,
   incompleteChapters,
 }) {
+  const router = useRouter();
+
+  const { novel } = router.query;
+
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
+
+  const writingRouterHandle = () => router.push(`/${novel}/blank`);
+
   return (
     <>
-      <NovelListWrapper>
+      <NovelListWrapper onClick={writingRouterHandle}>
         <img
           src="http://placeimg.com/190/130/any"
           style={{ marginRight: "2rem" }}

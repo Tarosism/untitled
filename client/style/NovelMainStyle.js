@@ -16,10 +16,17 @@ export const PaddingLine = styled.div`
 
 export const LinkWrapper = styled.div`
   display: flex;
+  width: 98%;
+  justify-content: space-between;
   gap: 1rem;
   height: 3rem;
   align-items: center;
   margin-left: 1rem;
+  position: fixed;
+  top: 0;
+  margin-left: 1rem;
+  z-index: 99;
+  background-color: #303030;
 `;
 export const DoingWrapper = styled.div`
   display: grid;

@@ -60,6 +60,17 @@ export default function novel() {
         <IntroduceWrapper>
           <NovelDetail />
           <PaddingLine />
+          <div>
+            {me?.novelList[novelIdx].writing && (
+              <>
+                <h3>작성중인 회차</h3> <br />
+                <LoginChapterList
+                  incompleteChapters={me?.novelList[novelIdx].writing}
+                />
+                <PaddingLine />
+              </>
+            )}
+          </div>
           <DoingWrapper>
             <Link href={`/${novel}/synopsisList`}>
               <NovelDoingSelect>
@@ -103,18 +114,8 @@ export default function novel() {
             </div>
           </DoingWrapper>
           <PaddingLine />
-          <div>
-            {!me?.novelList[novelIdx].writing ||
-              (me?.novelList[novelIdx].writing.text.html.length !== 0 && (
-                <>
-                  <h3>작성중인 회차</h3> <br />
-                  <LoginChapterList
-                    incompleteChapters={me?.novelList[novelIdx].writing}
-                  />
-                  <PaddingLine />
-                </>
-              ))}
 
+          <div>
             <h3>작성한 회차</h3>
             <br />
             {me?.novelList[novelIdx].written

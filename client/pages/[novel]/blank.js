@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { LinkWrapperBlank, PaddingLine } from "../../style/NovelMainStyle";
+import {
+  LinkWrapperBlank,
+  PaddingLine,
+  BlankWrapper,
+  BlackMain,
+  EditableBlockWrapper,
+} from "../../style/NovelMainStyle";
 import EditableBlockBlank from "../../components/EditableBlockBlank";
 import { useSelector, useDispatch } from "react-redux";
 import { LeftOutlined } from "@ant-design/icons";
@@ -149,24 +155,6 @@ export default function blank() {
     </>
   );
 }
-
-const BlankWrapper = styled.div`
-  display: flex;
-  flex: 1 1 0%;
-  position: relative;
-  //width: 99vw;
-`;
-
-const BlackMain = styled.div`
-  width: 100%;
-`;
-
-const EditableBlockWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const CopyAlert = styled.div`
   width: 10rem;

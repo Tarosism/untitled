@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { convert } from "html-to-text";
 
 export default function LoginChapterList({
   chapterTitle,
@@ -15,11 +16,13 @@ export default function LoginChapterList({
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
 
-  const writingRouterHandle = () => router.push(`/${novel}/blank`);
+  const textCounts = convert(incompleteChapters?.text.html, {
+    wordwrap: 130,
+  });
 
   return (
     <>
-      <NovelListWrapper onClick={writingRouterHandle}>
+      <NovelListWrapper>
         <img
           src="http://placeimg.com/190/130/any"
           style={{ marginRight: "2rem" }}
@@ -40,13 +43,10 @@ export default function LoginChapterList({
                 : chapterTitle}
             </h3>{" "}
             {incompleteChapters ? (
-              <span className="six">
-                {incompleteChapters.text.html.length} /{" "}
-                {incompleteChapters.targetWords}{" "}
-              </span>
+              <span className="six">{textCounts.length}</span>
             ) : (
               <span className="six" style={{ fontSize: "14px" }}>
-                {wordCounts.length}
+                {textCounts.length}
               </span>
             )}
           </div>

@@ -288,11 +288,26 @@ const userReducer = (state = initalState, action) => {
     case ADD_BLANK:
       const bAddIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
       const bAddArr = [...state.me.novelList];
+      console.log(
+        bAddArr[bAddIdx].written[bAddArr[bAddIdx].written.length - 1].id
+      );
       if (bAddArr[bAddIdx].writing === null) {
-        bAddArr[bAddIdx].writing = { title: { html: "" }, text: { html: "" } };
+        bAddArr[bAddIdx].writing = {
+          id:
+            bAddArr[bAddIdx].written[bAddArr[bAddIdx].written.length - 1].id +
+            1,
+          title: { html: "" },
+          text: { html: "" },
+        };
       } else {
         bAddArr[bAddIdx].written.push(state.nowSelect.writing);
-        bAddArr[bAddIdx].writing = { title: { html: "" }, text: { html: "" } };
+        bAddArr[bAddIdx].writing = {
+          id:
+            bAddArr[bAddIdx].written[bAddArr[bAddIdx].written.length - 1].id +
+            1,
+          title: { html: "" },
+          text: { html: "" },
+        };
       }
       return {
         ...state,

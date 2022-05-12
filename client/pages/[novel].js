@@ -14,6 +14,7 @@ import { NovelDoingSelect, PaddingLine } from "../style/MainStyle";
 import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
 import LoginChapterList from "../components/LoginChapterList";
 import { updateNowSelectAction, addBlankAction } from "../reducer/user";
+import written from "./[novel]/written/[written]";
 
 export default function novel() {
   const router = useRouter();
@@ -35,6 +36,10 @@ export default function novel() {
     dispatch(addBlankAction());
     router.push(`/${novel}/blank`);
   };
+
+  const writingRouterHandle = () => router.push(`/${novel}/blank`);
+
+  const viewmodHandler = (fill) => router.push(`/${novel}/written/${fill.id}`);
 
   return (
     <>
@@ -64,9 +69,11 @@ export default function novel() {
             {me?.novelList[novelIdx].writing && (
               <>
                 <h3>작성중인 회차</h3> <br />
-                <LoginChapterList
-                  incompleteChapters={me?.novelList[novelIdx].writing}
-                />
+                <div onClick={writingRouterHandle}>
+                  <LoginChapterList
+                    incompleteChapters={me?.novelList[novelIdx].writing}
+                  />
+                </div>
                 <PaddingLine />
               </>
             )}
@@ -122,10 +129,12 @@ export default function novel() {
               .slice(0)
               .reverse()
               .map((fill) => (
-                <LoginChapterList
-                  chapterTitle={fill.title.html}
-                  wordCounts={fill.text.html}
-                />
+                <div onClick={() => viewmodHandler(fill)}>
+                  <LoginChapterList
+                    chapterTitle={fill.title.html}
+                    wordCounts={fill.text.html}
+                  />
+                </div>
               ))}
           </div>
         </IntroduceWrapper>

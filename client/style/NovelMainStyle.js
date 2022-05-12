@@ -47,3 +47,21 @@ export const DoingWrapper = styled.div`
 export const IntroduceWrapper = styled.div`
   display: grid;
 `;
+
+export const BlankWrapper = styled.div`
+  display: flex;
+  flex: 1 1 0%;
+  position: relative;
+  //width: 99vw;
+`;
+
+export const BlackMain = styled.div`
+  width: 100%;
+`;
+
+export const EditableBlockWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

@@ -3,7 +3,7 @@ import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
 import { blankNameAction, blankTextAction } from "../reducer/user";
 
-export default function EditableBlock({ nowBlank }) {
+export default function EditableBlock({ nowBlank, disable }) {
   const ref = useRef();
 
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export default function EditableBlock({ nowBlank }) {
           <ContentEditable
             className="eightSeven"
             html={nowBlank.title.html}
-            disabled={false}
+            disabled={disable ? true : false}
             onChange={(e) =>
               dispatch(blankNameAction({ html: e.target.value }))
             }
@@ -42,7 +42,7 @@ export default function EditableBlock({ nowBlank }) {
           <ContentEditable
             className="eightSeven blankText"
             html={nowBlank.text.html}
-            disabled={false}
+            disabled={disable ? true : false}
             onChange={(e) =>
               dispatch(blankTextAction({ html: e.target.value }))
             }

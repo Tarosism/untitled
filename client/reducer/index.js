@@ -2,6 +2,7 @@ import { HYDRATE } from "next-redux-wrapper"; //서버사이드랜더링을 위�
 import { combineReducers } from "redux";
 import userReducer from "./user";
 import copyReducer from "./copyed";
+import etcReducer from "./etcducer";
 
 const rootReducer = combineReducers({
   index: (state = {}, action) => {
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   },
   userReducer,
   copyReducer,
+  etcReducer,
 });
 
 export default rootReducer;

@@ -17,7 +17,7 @@ import { convert } from "html-to-text";
 import { copyAction } from "../../reducer/copyed";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CopyOutlined } from "@ant-design/icons";
-import { pageSelectAction } from "../../reducer/user";
+import { pageSelectAction, endBlankAction } from "../../reducer/user";
 
 export default function blank() {
   const router = useRouter();
@@ -40,6 +40,7 @@ export default function blank() {
       setCopyModal(false);
     }, 1500);
   };
+
   useEffect(() => {
     dispatch(pageSelectAction("blank"));
   }, []);
@@ -81,7 +82,7 @@ export default function blank() {
                 <>
                   <span className="threeEight">/</span>
                   <span className="eightSeven">
-                    {nowSelect.writing.title.html}
+                    {nowSelect?.writing?.title?.html}
                   </span>
                 </>
               )}
@@ -92,6 +93,7 @@ export default function blank() {
                 fontSize: "14px",
                 gap: "1rem",
                 alignItems: "center",
+                marginRight: "1rem",
               }}
             >
               <div style={{ textAlign: "end" }}>
@@ -130,6 +132,11 @@ export default function blank() {
                     padding: "0.25rem",
                     border: "1px solid rgba(255,255,255, 60%)",
                     borderRadius: "20%",
+                  }}
+                  onClick={() => {
+                    const { id } = nowSelect.writing;
+                    dispatch(endBlankAction());
+                    router.push(`/${novel}/written/${id}`);
                   }}
                 >
                   완료

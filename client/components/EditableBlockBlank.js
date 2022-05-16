@@ -2,17 +2,31 @@ import React, { useState, useRef } from "react";
 import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
 import { blankNameAction, blankTextAction } from "../reducer/user";
+import { modifyDataAction } from "../reducer/etcducer";
 
 export default function EditableBlock({ nowBlank, disable }) {
   const ref = useRef();
 
+  const etcState = useSelector((state) => state.etcReducer);
+  const { modifyData, nowWritten } = etcState;
   const dispatch = useDispatch();
-
+  //수정 가능하게 바뀌었다는 걸 알려주는 포커싱
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       ref.current.focus();
     }
+  };
+
+  const modifyTitleHandler = (e) => {
+    dispatch(
+      modifyDataAction({ ...modifyData, title: { html: e.target.value } })
+    );
+  };
+  const modifyTextHandler = (e) => {
+    dispatch(
+      modifyDataAction({ ...modifyData, text: { html: e.target.value } })
+    );
   };
 
   return (
@@ -29,22 +43,26 @@ export default function EditableBlock({ nowBlank, disable }) {
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={nowBlank.title.html}
+            html={modifyData ? nowWritten.title.html : nowBlank?.title?.html} //
             disabled={disable ? true : false}
-            onChange={(e) =>
-              dispatch(blankNameAction({ html: e.target.value }))
-            }
+            onChange={(e) => {
+              disable === undefined
+                ? dispatch(blankNameAction({ html: e.target.value }))
+                : modifyTitleHandler(e);
+            }}
             tagName="h2"
             placeholder={"무제"}
             onKeyDown={onKeyDownHandler}
           />
-          <hr />
+          <hr className="hrMg2" />
           <ContentEditable
             className="eightSeven blankText"
-            html={nowBlank.text.html}
+            html={modifyData ? nowWritten.text.html : nowBlank?.text?.html}
             disabled={disable ? true : false}
             onChange={(e) =>
-              dispatch(blankTextAction({ html: e.target.value }))
+              disable === undefined
+                ? dispatch(blankTextAction({ html: e.target.value }))
+                : modifyTextHandler(e)
             }
             tagName="div"
             placeholder={"마음껏 보여주세요!"}

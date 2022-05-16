@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LinkWrapperBlank,
   PaddingLine,
@@ -10,7 +10,9 @@ import BlankNav from "../../../components/BlankNav";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import EditableBlockBlank from "../../../components/EditableBlockBlank";
-import { LeftOutlined } from "@ant-design/icons";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { modifyAction } from "../../../reducer/user";
+import { modifyDataAction, nowWrittenAction } from "../../../reducer/etcducer";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,15 +23,40 @@ export default function written() {
   const [linkCount, setLinkCount] = useState(3);
 
   const state = useSelector((state) => state.userReducer);
+  const etcState = useSelector((state) => state.etcReducer);
   const { me, nowSelect } = state;
+  const { modifyData, nowWritten } = etcState;
   const dispatch = useDispatch();
 
-  const idx = nowSelect.written.findIndex(
-    (fill) => fill.id === Number(written)
+  const [idx, setIdx] = useState(
+    nowSelect.written.findIndex((fill) => fill.id === Number(written))
   );
 
-  const nowWritten = nowSelect.written[idx];
+  useEffect(() => {
+    dispatch(nowWrittenAction(nowSelect.written[idx]));
+  }, []);
 
+  const prevHandler = () => {
+    dispatch(nowWrittenAction(nowSelect.written[idx - 1]));
+    setIdx((prev) => prev - 1);
+    router.push(`/${novel}/written/${nowWritten.id}`);
+  };
+  const nextHandler = () => {
+    dispatch(nowWrittenAction(nowSelect.written[idx + 1]));
+    setIdx((prev) => prev + 1);
+    router.push(`/${novel}/written/${nowWritten.id}`);
+  };
+
+  const [disable, setDisable] = useState(true);
+  const modifyHandler = () => {
+    setDisable(false);
+    dispatch(modifyDataAction(nowWritten));
+  };
+  const endModifyHandler = () => {
+    dispatch(modifyDataAction(null));
+    dispatch(modifyAction(idx, modifyData));
+    setDisable(true);
+  };
   return (
     <>
       <BlankWrapper>
@@ -62,7 +89,7 @@ export default function written() {
               {linkCount > 2 && (
                 <>
                   <span className="threeEight">/</span>
-                  <span className="eightSeven">{nowWritten.title.html}</span>
+                  <span className="eightSeven">{nowWritten?.title?.html}</span>
                 </>
               )}
             </div>
@@ -84,17 +111,34 @@ export default function written() {
                   gap: "1rem",
                 }}
               >
-                <span
-                  className="six"
-                  style={{
-                    fontSize: "1rem",
-                    padding: "0.25rem",
-                    border: "1px solid rgba(255,255,255, 60%)",
-                    borderRadius: "20%",
-                  }}
-                >
-                  수정
-                </span>
+                {disable ? (
+                  <span
+                    className="six"
+                    style={{
+                      fontSize: "1rem",
+                      padding: "0.25rem",
+                      border: "1px solid rgba(255,255,255, 60%)",
+                      borderRadius: "20%",
+                    }}
+                    onClick={modifyHandler}
+                  >
+                    수정
+                  </span>
+                ) : (
+                  <span
+                    className="six"
+                    style={{
+                      fontSize: "1rem",
+                      padding: "0.25rem",
+
+                      borderRadius: "20%",
+                      backgroundColor: "violet",
+                    }}
+                    onClick={endModifyHandler}
+                  >
+                    완료
+                  </span>
+                )}
               </div>
 
               <div
@@ -109,10 +153,43 @@ export default function written() {
 
           <EditableBlockWrapper>
             <PaddingLine />
-            <EditableBlockBlank nowBlank={nowWritten} disable={true} />
+            <PaddingLine />
+            {idx === 0 || !disable ? (
+              <></>
+            ) : (
+              <LeftOutlined
+                className="six"
+                style={lineLt}
+                onClick={prevHandler}
+              />
+            )}
+
+            <EditableBlockBlank disable={disable} nowBlank={nowWritten} />
+            {idx === nowSelect.written.length - 1 || !disable ? (
+              <></>
+            ) : (
+              <RightOutlined
+                className="six"
+                style={lineRt}
+                onClick={nextHandler}
+              />
+            )}
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>
     </>
   );
 }
+
+const lineLt = {
+  position: "fixed",
+  top: "50%",
+  left: "25%",
+  fontSize: "2.5rem",
+};
+const lineRt = {
+  position: "fixed",
+  top: "50%",
+  right: "25%",
+  fontSize: "2.5rem",
+};

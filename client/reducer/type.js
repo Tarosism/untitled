@@ -16,3 +16,7 @@ export const BLANK_TITLE_FIX = "BLANK_TITLE_FIX";
 export const BLANK_TEXT_FIX = "BLANK_TEXT_FIX";
 export const ADD_BLANK = "ADD_BLANK";
 export const PAGE_SELECT = "PAGE_SELECT";
+export const END_BLANK = "END_BLANK";
+export const MODIFY_WRITTEN = "MODIFY_WRITTEN";
+export const MODIFY_DATA = "MODIFY_DATA";
+export const NOW_WRITTEN = "NOW_WRITTEN";

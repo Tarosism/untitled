@@ -20,6 +20,10 @@ export default function LoginChapterList({
     wordwrap: 130,
   });
 
+  const writtenCounts = convert(wordCounts, {
+    wordwrap: 130,
+  });
+
   return (
     <>
       <NovelListWrapper>
@@ -46,7 +50,7 @@ export default function LoginChapterList({
               <span className="six">{textCounts.length}</span>
             ) : (
               <span className="six" style={{ fontSize: "14px" }}>
-                {textCounts.length}
+                {writtenCounts.length}
               </span>
             )}
           </div>

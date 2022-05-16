@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Background,
   ModalContainer,
@@ -9,9 +9,16 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { loginAction } from "../reducer/user";
 import styled from "styled-components";
+import { modifyDataAction } from "../reducer/etcducer";
 
 export default function LoginModal({ setLoginModal }) {
   const dispatch = useDispatch();
+  const etcState = useSelector((state) => state.etcReducer);
+  const { nowWritten } = etcState;
+
+  useEffect(() => {
+    dispatch(modifyDataAction(nowWritten));
+  }, []);
 
   const [email, setEmail] = useState("asd");
   const onChangeEmail = (e) => {
@@ -95,6 +102,7 @@ export default function LoginModal({ setLoginModal }) {
                 text: { html: "니나노" },
               },
               writing: {
+                id: 2,
                 title: { html: "2화: 휴재" },
                 text: { html: "무야홍" },
               },
@@ -113,6 +121,7 @@ export default function LoginModal({ setLoginModal }) {
             },
           ],
           record: { words: 12, charaCounts: 1, chapters: 1 },
+          modify: null,
         })
       );
     }

@@ -16,6 +16,8 @@ import {
   BLANK_TEXT_FIX,
   ADD_BLANK,
   PAGE_SELECT,
+  END_BLANK,
+  MODIFY_WRITTEN,
 } from "./type";
 
 export const initalState = {
@@ -142,6 +144,18 @@ export const pageSelectAction = (page) => {
   return {
     type: PAGE_SELECT,
     page,
+  };
+};
+export const endBlankAction = () => {
+  return {
+    type: END_BLANK,
+  };
+};
+export const modifyAction = (idx, data) => {
+  return {
+    type: MODIFY_WRITTEN,
+    idx,
+    data,
   };
 };
 
@@ -288,9 +302,6 @@ const userReducer = (state = initalState, action) => {
     case ADD_BLANK:
       const bAddIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
       const bAddArr = [...state.me.novelList];
-      console.log(
-        bAddArr[bAddIdx].written[bAddArr[bAddIdx].written.length - 1].id
-      );
       if (bAddArr[bAddIdx].writing === null) {
         bAddArr[bAddIdx].writing = {
           id:
@@ -317,6 +328,23 @@ const userReducer = (state = initalState, action) => {
       return {
         ...state,
         inPage: action.page,
+      };
+    case END_BLANK:
+      const bEndIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const bEndArr = [...state.me.novelList];
+      bEndArr[bEndIdx].written.push(state.nowSelect.writing);
+      bEndArr[bEndIdx].writing = null;
+      return {
+        ...state,
+        me: { ...state.me, novelList: bEndArr },
+      };
+    case MODIFY_WRITTEN:
+      const bModifyIdx = findIndexTool(state.me.novelList, state.nowSelect.id);
+      const bModifyArr = [...state.me.novelList];
+      bModifyArr[bModifyIdx].written[action.idx] = action.data;
+      return {
+        ...state,
+        me: { ...state.me, novelList: bModifyArr },
       };
     default:
       return state;

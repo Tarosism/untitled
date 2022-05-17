@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,13 +7,19 @@ import EditableBlockWorldview from "../../components/EditableBlockWorldview";
 import { useSelector, useDispatch } from "react-redux";
 import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
 import BlankNav from "../../components/BlankNav";
+import { sidebarTargetAction } from "../../reducer/etcducer";
 
 export default function worldview() {
   const router = useRouter();
   const { novel } = router.query;
+  const dispatch = useDispatch();
 
   const state = useSelector((state) => state.userReducer);
   const { me, nowSelect } = state;
+
+  useEffect(() => {
+    dispatch(sidebarTargetAction("chara"));
+  }, []);
 
   const [linkCount, setLinkCount] = useState(3);
 

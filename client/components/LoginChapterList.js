@@ -1,14 +1,29 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { convert } from "html-to-text";
 
 export default function LoginChapterList({
   chapterTitle,
   wordCounts,
   incompleteChapters,
 }) {
+  const router = useRouter();
+
+  const { novel } = router.query;
+
   const state = useSelector((state) => state.userReducer);
   const { me } = state;
+
+  const textCounts = convert(incompleteChapters?.text.html, {
+    wordwrap: 130,
+  });
+
+  const writtenCounts = convert(wordCounts, {
+    wordwrap: 130,
+  });
+
   return (
     <>
       <NovelListWrapper>
@@ -32,13 +47,10 @@ export default function LoginChapterList({
                 : chapterTitle}
             </h3>{" "}
             {incompleteChapters ? (
-              <span className="six">
-                {incompleteChapters.text.html.length} /{" "}
-                {incompleteChapters.targetWords}{" "}
-              </span>
+              <span className="six">{textCounts.length}</span>
             ) : (
               <span className="six" style={{ fontSize: "14px" }}>
-                {wordCounts.length}
+                {writtenCounts.length}
               </span>
             )}
           </div>

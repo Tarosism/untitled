@@ -4,15 +4,29 @@ import { useSelector, useDispatch } from "react-redux";
 import { blankNameAction, blankTextAction } from "../reducer/user";
 import { modifyDataAction } from "../reducer/etcducer";
 
-export default function EditableBlock({ nowBlank, sideControll }) {
+export default function EditableBlock({}) {
   const ref = useRef();
 
+  const etcState = useSelector((state) => state.etcReducer);
+  const { modifyData, nowWritten, disable } = etcState;
   const dispatch = useDispatch();
+  //수정 가능하게 바뀌었다는 걸 알려주는 포커싱
+  !disable && ref.current.focus();
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       ref.current.focus();
     }
+  };
+  const modifyTitleHandler = (e) => {
+    dispatch(
+      modifyDataAction({ ...modifyData, title: { html: e.target.value } })
+    );
+  };
+  const modifyTextHandler = (e) => {
+    dispatch(
+      modifyDataAction({ ...modifyData, text: { html: e.target.value } })
+    );
   };
 
   return (
@@ -25,16 +39,13 @@ export default function EditableBlock({ nowBlank, sideControll }) {
           flexDirection: "column",
           position: "relative",
         }}
-        className={sideControll ? "mgL25" : "mgL0"}
       >
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={nowBlank?.title?.html} //
-            disabled={false}
-            onChange={(e) => {
-              dispatch(blankNameAction({ html: e.target.value }));
-            }}
+            html={disable ? nowWritten?.title?.html : modifyData?.title?.html} //
+            disabled={disable ? true : false}
+            onChange={(e) => modifyTitleHandler(e)}
             tagName="h2"
             placeholder={"무제"}
             onKeyDown={onKeyDownHandler}
@@ -42,11 +53,9 @@ export default function EditableBlock({ nowBlank, sideControll }) {
           <hr className="hrMg2" />
           <ContentEditable
             className="eightSeven blankText"
-            html={nowBlank?.text?.html}
-            disabled={false}
-            onChange={(e) =>
-              dispatch(blankTextAction({ html: e.target.value }))
-            }
+            html={disable ? nowWritten?.text?.html : modifyData?.text?.html}
+            disabled={disable ? true : false}
+            onChange={(e) => modifyTextHandler(e)}
             tagName="div"
             placeholder={"마음껏 보여주세요!"}
             innerRef={ref}

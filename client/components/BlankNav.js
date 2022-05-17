@@ -1,27 +1,42 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+
 import { DashOutlined } from "@ant-design/icons";
 
-export default function BlankNav() {
+export default function BlankNav({ setSideControll }) {
   const [sideOpen, setSideOpen] = useState(false);
+
+  const state = useSelector((state) => state.userReducer);
+  const etcState = useSelector((state) => state.etcReducer);
+  const { me, nowSelect } = state;
+  const { target } = etcState;
+  const dispatch = useDispatch();
 
   const sideOpenHandler = () => {
     setSideOpen((prev) => !prev);
+    setSideControll((prev) => !prev);
   };
-
   return (
     <>
       <SidebarWrapper>
         <Sidebar>
-          <SidebarSelectBox onClick={sideOpenHandler}>세계관</SidebarSelectBox>
-          <SidebarSelectBox>캐릭터</SidebarSelectBox>
+          {target !== "synopsis" && (
+            <SidebarSelectBox onClick={sideOpenHandler}>
+              시놉시스
+            </SidebarSelectBox>
+          )}
+          {target !== "worldview" && (
+            <SidebarSelectBox onClick={sideOpenHandler}>
+              세계관
+            </SidebarSelectBox>
+          )}
+          {target !== "chara" && <SidebarSelectBox>캐릭터</SidebarSelectBox>}
           <DashOutlined className="six" />
         </Sidebar>
-        {sideOpen && (
-          <ClickedSidebar>
-            어떻게 하면 저장된 세계관과 캐릭터를 그대로 불러올 수 있을까?
-          </ClickedSidebar>
-        )}
+        <ClickedSidebar className={sideOpen ? "sideOpenTab" : "sideCloseTab"}>
+          {nowSelect.worldview.text.html}
+        </ClickedSidebar>
       </SidebarWrapper>
     </>
   );
@@ -32,6 +47,8 @@ const SidebarWrapper = styled.div`
   display: flex;
 `;
 const Sidebar = styled.div`
+  position: fixed;
+  left: 0;
   width: 4rem;
   height: 100%;
   background-color: #282828;
@@ -39,7 +56,8 @@ const Sidebar = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding-top: 1.5rem;
+  padding-top: 4rem;
+  z-index: 1;
 `;
 const SidebarSelectBox = styled.div`
   width: 3rem;
@@ -62,4 +80,6 @@ const ClickedSidebar = styled.div`
   box-shadow: 0.25rem 0 0.7rem #000;
   color: rgba(255, 255, 255, 87%);
   padding: 1.5rem;
+  position: fixed;
+  z-index: 0;
 `;

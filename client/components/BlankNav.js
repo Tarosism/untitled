@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import SidePlate from "./SidePlate";
 
-import { DashOutlined } from "@ant-design/icons";
+import { DashOutlined, DoubleLeftOutlined } from "@ant-design/icons";
 
 export default function BlankNav({ setSideControll }) {
   const [sideOpen, setSideOpen] = useState(false);
+  const [sideTag, setSideTag] = useState("");
 
   const state = useSelector((state) => state.userReducer);
   const etcState = useSelector((state) => state.etcReducer);
@@ -13,29 +15,45 @@ export default function BlankNav({ setSideControll }) {
   const { target } = etcState;
   const dispatch = useDispatch();
 
-  const sideOpenHandler = () => {
-    setSideOpen((prev) => !prev);
-    setSideControll((prev) => !prev);
+  const sideOpenHandler = (tag) => {
+    setSideTag(tag);
+    setSideOpen(true);
+    setSideControll(true);
+  };
+  const sideCloseHandler = () => {
+    setSideOpen(false);
+    setSideControll(false);
   };
   return (
     <>
       <SidebarWrapper>
         <Sidebar>
           {target !== "synopsis" && (
-            <SidebarSelectBox onClick={sideOpenHandler}>
-              시놉시스
+            <SidebarSelectBox onClick={() => sideOpenHandler("synopsis")}>
+              시놉
+              <br />
+              시스
             </SidebarSelectBox>
           )}
           {target !== "worldview" && (
-            <SidebarSelectBox onClick={sideOpenHandler}>
+            <SidebarSelectBox onClick={() => sideOpenHandler("worldview")}>
               세계관
             </SidebarSelectBox>
           )}
-          {target !== "chara" && <SidebarSelectBox>캐릭터</SidebarSelectBox>}
+          {target !== "chara" && (
+            <SidebarSelectBox onClick={() => sideOpenHandler("chara")}>
+              캐릭터
+            </SidebarSelectBox>
+          )}
           <DashOutlined className="six" />
         </Sidebar>
         <ClickedSidebar className={sideOpen ? "sideOpenTab" : "sideCloseTab"}>
-          {nowSelect.worldview.text.html}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>{sideTag}</div>
+            <DoubleLeftOutlined onClick={sideCloseHandler} />
+          </div>
+          <hr />
+          <SidePlate sideTag={sideTag} />
         </ClickedSidebar>
       </SidebarWrapper>
     </>

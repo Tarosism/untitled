@@ -16,15 +16,14 @@ export const PaddingLine = styled.div`
 
 export const LinkWrapperBlank = styled.div`
   display: flex;
-  width: 98%;
+  width: 100%;
   justify-content: space-between;
   gap: 1rem;
   height: 3rem;
   align-items: center;
-  margin-left: 1rem;
   position: fixed;
   top: 0;
-  margin-left: 1rem;
+  left: 1rem;
   z-index: 99;
   background-color: #303030;
 `;

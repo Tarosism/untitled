@@ -16,8 +16,8 @@ import BlankNav from "../../components/BlankNav";
 import { convert } from "html-to-text";
 import { copyAction } from "../../reducer/copyed";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CopyOutlined } from "@ant-design/icons";
 import { pageSelectAction, endBlankAction } from "../../reducer/user";
+import { sidebarTargetAction } from "../../reducer/etcducer";
 
 export default function blank() {
   const router = useRouter();
@@ -29,37 +29,41 @@ export default function blank() {
 
   const [linkCount, setLinkCount] = useState(3);
 
-  const [copyModal, setCopyModal] = useState(false);
+  const [sideControll, setSideControll] = useState(false);
+
+  const [writingAlert, setWritingAlert] = useState("opa0");
+
   const textCounts = convert(nowSelect.writing?.text.html, {
     wordwrap: 130,
   });
   const copyTextHandler = (textCounts, result) => {
     dispatch(copyAction({ value: textCounts, copied: true }));
-    result && setCopyModal(true);
+    result && setWritingAlert("opa100");
     setTimeout(() => {
-      setCopyModal(false);
+      setWritingAlert("opa0");
     }, 1500);
   };
-
   useEffect(() => {
     dispatch(pageSelectAction("blank"));
+    dispatch(sidebarTargetAction("blank"));
   }, []);
 
   return (
     <>
-      {copyModal && (
-        <CopyAlert className="eightSeven">복사 되었습니다</CopyAlert>
-      )}
+      <CopyAlert className={`eightSeven ${writingAlert}`}>
+        복사 되었습니다
+      </CopyAlert>
       <BlankWrapper>
-        <BlankNav />
+        <BlankNav setSideControll={setSideControll} />
         <BlackMain>
-          <LinkWrapperBlank>
+          <div className={sideControll ? "sideOpen" : "sideClose"}>
             <div
               style={{
                 display: "flex",
-                width: "25rem",
+                width: "30rem",
                 fontSize: "14px",
                 gap: "1rem",
+                paddingLeft: "1rem",
               }}
             >
               <div>
@@ -93,7 +97,6 @@ export default function blank() {
                 fontSize: "14px",
                 gap: "1rem",
                 alignItems: "center",
-                marginRight: "1rem",
               }}
             >
               <div style={{ textAlign: "end" }}>
@@ -151,11 +154,14 @@ export default function blank() {
                 }}
               ></div>
             </div>
-          </LinkWrapperBlank>
+          </div>
 
           <EditableBlockWrapper>
             <PaddingLine />
-            <EditableBlockBlank nowBlank={nowSelect.writing} />
+            <EditableBlockBlank
+              nowBlank={nowSelect.writing}
+              sideControll={sideControll}
+            />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>
@@ -167,7 +173,7 @@ const CopyAlert = styled.div`
   width: 10rem;
   height: 5rem;
   background-color: #282828;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

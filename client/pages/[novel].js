@@ -15,6 +15,7 @@ import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
 import LoginChapterList from "../components/LoginChapterList";
 import { updateNowSelectAction, addBlankAction } from "../reducer/user";
 import written from "./[novel]/written/[written]";
+import styled from "styled-components";
 
 export default function novel() {
   const router = useRouter();
@@ -33,18 +34,37 @@ export default function novel() {
   const [linkCount, setLinkCount] = useState(2);
 
   const addBlank = () => {
-    dispatch(addBlankAction());
-    router.push(`/${novel}/blank`);
+    if (me?.novelList[novelIdx].writing) {
+      setWritingAlert("opa100");
+    } else {
+      dispatch(addBlankAction());
+      router.push(`/${novel}/blank`);
+    }
   };
 
   const writingRouterHandle = () => router.push(`/${novel}/blank`);
 
   const viewmodHandler = (fill) => router.push(`/${novel}/written/${fill.id}`);
 
+  const [writingAlert, setWritingAlert] = useState("opa0");
+  const alertHandler = () => {
+    setWritingAlert("opa0");
+    dispatch(addBlankAction());
+    router.push(`/${novel}/blank`);
+  };
+
   return (
     <>
       <LoginNav />
       <MainDefault>
+        <WritingAlert className={writingAlert}>
+          작성 중인 회차가 있습니다. <br />
+          저장하고 새 회차를 시작하시겠어요?
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <No onClick={() => setWritingAlert("opa0")}>잠시만요</No>
+            <Yes onClick={alertHandler}>네</Yes>
+          </div>
+        </WritingAlert>
         <br />
         <LinkWrapper>
           <div>
@@ -144,3 +164,39 @@ export default function novel() {
 }
 //결국 아래에 작은 글씨 하나를 넣기는 넣어야 함. 골치아픔.. 이쪽은 일단 스킵하고
 // 데이터 갖고 놀 때 다시 생각해보도록 하자 그리고 컴포넌트들 정리하셈
+const WritingAlert = styled.div`
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* display: grid; */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem 1.5rem;
+  background: #282828;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 21;
+  color: rgba(255, 255, 255, 87%);
+  line-height: 1.5rem;
+`;
+const Yes = styled.button`
+  width: 7rem;
+  color: rgba(255, 255, 255, 87%);
+  box-sizing: border-box;
+  background-color: violet;
+  border-radius: 5px;
+  border: 2px solid violet;
+  padding: 0.45em 1em;
+  font-weight: 700;
+`;
+const No = styled.button`
+  width: 7rem;
+  color: rgba(255, 255, 255, 60%);
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 60%);
+  padding: 0.45em 1em;
+  font-weight: 700;
+`;

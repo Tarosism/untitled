@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,6 +7,7 @@ import EditableBlockChara from "../../../components/EditableBlockChara";
 import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
 import BlankNav from "../../../components/BlankNav";
 import { useSelector, useDispatch } from "react-redux";
+import { sidebarTargetAction } from "../../../reducer/etcducer";
 
 export default function chara() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function chara() {
 
   const state = useSelector((state) => state.userReducer);
   const { me, nowSelect } = state;
+
+  useEffect(() => {
+    dispatch(sidebarTargetAction("chara"));
+  }, []);
 
   const [linkCount, setLinkCount] = useState(3);
 
@@ -27,32 +32,41 @@ export default function chara() {
         <BlankNav />
         <BlackMain>
           <LinkWrapper>
-            <div>
-              {" "}
-              <Link href={"/"}>
-                <span className="eightSeven">
-                  <LeftOutlined
-                    className="threeEight"
-                    style={{ fontSize: "14px" }}
-                  />{" "}
-                  {me?.nickName}
-                </span>
-              </Link>
-            </div>
-            <span className="threeEight">/</span>
-            <Link href={`/${novel}`}>
-              <span className="eightSeven">{nowSelect.title.html}</span>
-            </Link>
-            {linkCount > 2 && (
-              <>
-                <span className="threeEight">/</span>
-                <Link href={`/${novel}/charaList`}>
-                  <span className="eightSeven">캐릭터</span>
+            <div
+              style={{
+                display: "flex",
+                width: "30rem",
+                fontSize: "14px",
+                gap: "1rem",
+              }}
+            >
+              <div style={{ marginLeft: "1rem" }}>
+                {" "}
+                <Link href={"/"}>
+                  <span className="eightSeven">
+                    <LeftOutlined
+                      className="threeEight"
+                      style={{ fontSize: "14px" }}
+                    />{" "}
+                    {me?.nickName}
+                  </span>
                 </Link>
-                <span className="threeEight">/</span>
-                <span className="eightSeven">{nowChara.name.html}</span>
-              </>
-            )}
+              </div>
+              <span className="threeEight">/</span>
+              <Link href={`/${novel}`}>
+                <span className="eightSeven">{nowSelect.title.html}</span>
+              </Link>
+              {linkCount > 2 && (
+                <>
+                  <span className="threeEight">/</span>
+                  <Link href={`/${novel}/charaList`}>
+                    <span className="eightSeven">캐릭터</span>
+                  </Link>
+                  <span className="threeEight">/</span>
+                  <span className="eightSeven">{nowChara.name.html}</span>
+                </>
+              )}
+            </div>
           </LinkWrapper>
 
           <EditableBlockWrapper>

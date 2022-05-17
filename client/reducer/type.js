@@ -20,3 +20,5 @@ export const END_BLANK = "END_BLANK";
 export const MODIFY_WRITTEN = "MODIFY_WRITTEN";
 export const MODIFY_DATA = "MODIFY_DATA";
 export const NOW_WRITTEN = "NOW_WRITTEN";
+export const MODIFY_DISABLE = "MODIFY_DISABLE";
+export const SIDEBAR_TARGET = "SIDEBAR_TARGET";

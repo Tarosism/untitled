@@ -6,13 +6,16 @@ import {
   BlackMain,
   EditableBlockWrapper,
 } from "../../../style/NovelMainStyle";
-import BlankNav from "../../../components/BlankNav";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import EditableBlockBlank from "../../../components/EditableBlockBlank";
+import EditableBlockModify from "../../../components/EditableBlockModify";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { modifyAction } from "../../../reducer/user";
-import { modifyDataAction, nowWrittenAction } from "../../../reducer/etcducer";
+import {
+  modifyDataAction,
+  nowWrittenAction,
+  modifyDisableAction,
+} from "../../../reducer/etcducer";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -25,7 +28,7 @@ export default function written() {
   const state = useSelector((state) => state.userReducer);
   const etcState = useSelector((state) => state.etcReducer);
   const { me, nowSelect } = state;
-  const { modifyData, nowWritten } = etcState;
+  const { modifyData, nowWritten, disable } = etcState;
   const dispatch = useDispatch();
 
   const [idx, setIdx] = useState(
@@ -34,7 +37,7 @@ export default function written() {
 
   useEffect(() => {
     dispatch(nowWrittenAction(nowSelect.written[idx]));
-  }, []);
+  }, [disable]);
 
   const prevHandler = () => {
     dispatch(nowWrittenAction(nowSelect.written[idx - 1]));
@@ -47,15 +50,14 @@ export default function written() {
     router.push(`/${novel}/written/${nowWritten.id}`);
   };
 
-  const [disable, setDisable] = useState(true);
   const modifyHandler = () => {
-    setDisable(false);
+    dispatch(modifyDisableAction());
     dispatch(modifyDataAction(nowWritten));
   };
   const endModifyHandler = () => {
     dispatch(modifyDataAction(null));
     dispatch(modifyAction(idx, modifyData));
-    setDisable(true);
+    dispatch(modifyDisableAction());
   };
   return (
     <>
@@ -65,12 +67,12 @@ export default function written() {
             <div
               style={{
                 display: "flex",
-                width: "25rem",
+                width: "30rem",
                 fontSize: "14px",
                 gap: "1rem",
               }}
             >
-              <div>
+              <div style={{ marginLeft: "1rem" }}>
                 {" "}
                 <Link href={"/"}>
                   <span className="eightSeven">
@@ -164,7 +166,7 @@ export default function written() {
               />
             )}
 
-            <EditableBlockBlank disable={disable} nowBlank={nowWritten} />
+            <EditableBlockModify />
             {idx === nowSelect.written.length - 1 || !disable ? (
               <></>
             ) : (

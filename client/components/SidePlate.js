@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import ContentEditable from "react-contenteditable";
 
-export default function SidePlate({ sideTag }) {
+export default function SidePlate({ sideTag, sideTitle }) {
   const state = useSelector((state) => state.userReducer);
 
   const { me, nowSelect } = state;
 
   const [dataSet, setDataSet] = useState(false);
   const [inData, setInData] = useState("");
+
+  useEffect(() => {
+    setInData("");
+    setDataSet(false);
+  }, [sideTag]);
 
   const openSideData = (text) => {
     setDataSet(true);
@@ -25,34 +30,22 @@ export default function SidePlate({ sideTag }) {
     <>
       {!dataSet && (
         <SideWrapper>
-          {nowSelect[sideTag]?.map((fill) => {
-            return sideTag !== "worldview" ? (
-              <SideSelect onClick={() => openSideData(fill.text.html)}>
-                {fill.title.html}
-              </SideSelect>
-            ) : (
-              <div style={{ paddingTop: "2rem" }}>
-                <ContentEditable
-                  className="eightSeven"
-                  html={inData}
-                  disabled={true}
-                  tagName="div"
-                />
-              </div>
-            );
-          })}
+          {sideTag !== "worldview"
+            ? nowSelect[sideTag]?.map((fill) => (
+                <SideSelect onClick={() => openSideData(fill.text.html)}>
+                  {fill.title.html}
+                </SideSelect>
+              ))
+            : openSideData(nowSelect[sideTag].text.html)}
         </SideWrapper>
       )}
-      {dataSet && (
-        <UnorderedListOutlined
-          style={{
-            display: "inline-block",
-            float: "right",
-          }}
-          onClick={dataListSetHandler}
-        />
+      {dataSet && sideTag !== "worldview" && (
+        <>
+          <UnorderedListOutline onClick={dataListSetHandler} />
+          <div style={{ paddingBottom: "2rem" }} />
+        </>
       )}
-      <div style={{ paddingTop: "2rem" }}>
+      <div>
         <ContentEditable
           className="eightSeven"
           html={inData}
@@ -82,4 +75,7 @@ const SideSelect = styled.div`
   color: rgba(255, 255, 255, 0.86);
   cursor: pointer;
   font-size: 14px;
+`;
+const UnorderedListOutline = styled(UnorderedListOutlined)`
+  float: right;
 `;

@@ -1,17 +1,18 @@
 import React, { useState, useRef } from "react";
 import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
-import { blankNameAction, blankTextAction } from "../reducer/user";
 import { modifyDataAction } from "../reducer/etcducer";
+import { EditBlockWrapper } from "./EditableBlock";
 
-export default function EditableBlock({}) {
+export default function EditableBlock({ modifyData, setModifyData, disable }) {
   const ref = useRef();
 
   const etcState = useSelector((state) => state.etcReducer);
-  const { modifyData, nowWritten, disable } = etcState;
+  const { nowWritten } = etcState;
   const dispatch = useDispatch();
-  //수정 가능하게 바뀌었다는 걸 알려주는 포커싱
-  !disable && ref.current.focus();
+
+  /*!disable && ref.current.focus();*/
+
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -19,27 +20,15 @@ export default function EditableBlock({}) {
     }
   };
   const modifyTitleHandler = (e) => {
-    dispatch(
-      modifyDataAction({ ...modifyData, title: { html: e.target.value } })
-    );
+    setModifyData({ ...modifyData, title: { html: e.target.value } });
   };
   const modifyTextHandler = (e) => {
-    dispatch(
-      modifyDataAction({ ...modifyData, text: { html: e.target.value } })
-    );
+    setModifyData({ ...modifyData, text: { html: e.target.value } });
   };
-
+  console.log(modifyData);
   return (
     <>
-      <div
-        style={{
-          width: "31.25rem",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          position: "relative",
-        }}
-      >
+      <EditBlockWrapper>
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
@@ -61,7 +50,7 @@ export default function EditableBlock({}) {
             innerRef={ref}
           />
         </div>
-      </div>
+      </EditBlockWrapper>
     </>
   );
 }

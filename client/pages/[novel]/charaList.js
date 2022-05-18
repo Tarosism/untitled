@@ -32,8 +32,8 @@ export default function charaList() {
     const countId = nowSelect.chara[nowSelect.chara.length - 1].id + 1;
     const data = {
       id: countId,
-      name: { html: "" },
-      info: { html: "" },
+      title: { html: "" },
+      text: { html: "" },
     };
     dispatch(addCharaAction(data));
     router.push(`/${novel}/charaList/${countId}`);
@@ -49,11 +49,7 @@ export default function charaList() {
             {" "}
             <Link href={"/"}>
               <span className="eightSeven">
-                <LeftOutlined
-                  className="threeEight"
-                  style={{ fontSize: "14px" }}
-                />{" "}
-                {me?.nickName}
+                <LeftOutlined className="threeEight font14" /> {me?.nickName}
               </span>
             </Link>
           </div>
@@ -73,21 +69,15 @@ export default function charaList() {
           {nowSelect.chara.map((fill) => (
             <Link href={`/${novel}/charaList/${fill.id}`}>
               <NovelDoingSelect>
-                <ContainerOutlined
-                  style={{ fontSize: "2.5rem" }}
-                  className="six"
-                />
+                <ContainerOutlined className="six font2dot5rem" />
                 <br />
-                {fill.name.html}
+                {fill.title.html}
               </NovelDoingSelect>
             </Link>
           ))}
 
           <NovelDoingSelect onClick={addChara}>
-            <PlusCircleOutlined
-              style={{ fontSize: "2.5rem" }}
-              className="six"
-            />
+            <PlusCircleOutlined className="six font2dot5rem" />
           </NovelDoingSelect>
         </DoingWrapper>
       </MainDefault>

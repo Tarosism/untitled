@@ -14,7 +14,6 @@ import { NovelDoingSelect, PaddingLine } from "../style/MainStyle";
 import { LeftOutlined, ContainerOutlined } from "@ant-design/icons";
 import LoginChapterList from "../components/LoginChapterList";
 import { updateNowSelectAction, addBlankAction } from "../reducer/user";
-import written from "./[novel]/written/[written]";
 import styled from "styled-components";
 
 export default function novel() {
@@ -60,10 +59,10 @@ export default function novel() {
         <WritingAlert className={writingAlert}>
           작성 중인 회차가 있습니다. <br />
           저장하고 새 회차를 시작하시겠어요?
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <WritingAlertBtnWrapper>
             <No onClick={() => setWritingAlert("opa0")}>잠시만요</No>
             <Yes onClick={alertHandler}>네</Yes>
-          </div>
+          </WritingAlertBtnWrapper>
         </WritingAlert>
         <br />
         <LinkWrapper>
@@ -71,11 +70,7 @@ export default function novel() {
             {" "}
             <Link href={"/"}>
               <span className="eightSeven">
-                <LeftOutlined
-                  className="threeEight"
-                  style={{ fontSize: "14px" }}
-                />{" "}
-                {me?.nickName}
+                <LeftOutlined className="threeEight font14" /> {me?.nickName}
               </span>
             </Link>
           </div>
@@ -101,40 +96,28 @@ export default function novel() {
           <DoingWrapper>
             <Link href={`/${novel}/synopsisList`}>
               <NovelDoingSelect>
-                <ContainerOutlined
-                  style={{ fontSize: "2.5rem" }}
-                  className="six"
-                />
+                <ContainerOutlined className="six font2dot5rem" />
                 <br />
                 시놉시스
               </NovelDoingSelect>
             </Link>
             <Link href={`/${novel}/charaList`}>
               <NovelDoingSelect>
-                <ContainerOutlined
-                  style={{ fontSize: "2.5rem" }}
-                  className="six"
-                />
+                <ContainerOutlined className="six font2dot5rem" />
                 <br />
                 캐릭터
               </NovelDoingSelect>
             </Link>
             <Link href={`/${novel}/worldview`}>
               <NovelDoingSelect>
-                <ContainerOutlined
-                  style={{ fontSize: "2.5rem" }}
-                  className="six"
-                />
+                <ContainerOutlined className="six font2dot5rem" />
                 <br />
                 세계관
               </NovelDoingSelect>
             </Link>
             <div onClick={addBlank}>
               <NovelDoingSelect>
-                <ContainerOutlined
-                  style={{ fontSize: "2.5rem" }}
-                  className="six"
-                />
+                <ContainerOutlined className="six font2dot5rem" />
                 <br />
                 소설쓰기
               </NovelDoingSelect>
@@ -199,4 +182,9 @@ const No = styled.button`
   border: 2px solid rgba(255, 255, 255, 60%);
   padding: 0.45em 1em;
   font-weight: 700;
+`;
+
+const WritingAlertBtnWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

@@ -1,14 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import ContentEditable from "react-contenteditable";
-import { useSelector, useDispatch } from "react-redux";
-import { CopyOutlined } from "@ant-design/icons";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useDispatch } from "react-redux";
 import { charaNameFixAction, charaInfoFixAction } from "../reducer/user";
-import { convert } from "html-to-text";
-import { copyAction } from "../reducer/copyed";
 import styled from "styled-components";
+import { EditBlockWrapper, EditBlockSpace } from "./EditableBlock";
 
-export default function EditableBlock({ nowChara }) {
+export default function EditableBlock({ nowChara, sideControll }) {
   // const [propData, setPropData] = useState(null)
   // if(nowSynopsis) setPropData(nowSynopsis)
   // if(nowChara) setPropData(nowChara)
@@ -26,26 +23,12 @@ export default function EditableBlock({ nowChara }) {
 
   return (
     <>
-      <div
-        style={{
-          width: "31.25rem",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            padding: "0 1rem 1rem 1rem",
-          }}
-        ></div>
+      <EditBlockWrapper className={sideControll ? "mgL25" : "mgL0"}>
+        <EditBlockSpace></EditBlockSpace>
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
-            html={nowChara.name.html}
+            html={nowChara.title.html}
             disabled={false}
             onChange={(e) =>
               dispatch(
@@ -59,7 +42,7 @@ export default function EditableBlock({ nowChara }) {
           <hr />
           <ContentEditable
             className="eightSeven blankText"
-            html={nowChara.info.html}
+            html={nowChara.text.html}
             disabled={false}
             onChange={(e) =>
               dispatch(
@@ -71,7 +54,7 @@ export default function EditableBlock({ nowChara }) {
             innerRef={ref}
           />
         </div>
-      </div>
+      </EditBlockWrapper>
     </>
   );
 }

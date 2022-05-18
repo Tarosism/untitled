@@ -269,3 +269,22 @@ hr {
   left: -27rem;
   transition: all ease 0.5s 0s;
 }
+
+.font14 {
+  font-size: 14px;
+}
+.font2dot5rem {
+  font-size: 2.5rem;
+}
+.mgZOOO {
+  margin: 0 1rem 1rem 1rem;
+}
+
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.paddingZOOO {
+  padding: 0 1rem 1rem 1rem;
+}

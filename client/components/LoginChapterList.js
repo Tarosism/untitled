@@ -1,7 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { convert } from "html-to-text";
 
 export default function LoginChapterList({
@@ -9,13 +7,6 @@ export default function LoginChapterList({
   wordCounts,
   incompleteChapters,
 }) {
-  const router = useRouter();
-
-  const { novel } = router.query;
-
-  const state = useSelector((state) => state.userReducer);
-  const { me } = state;
-
   const textCounts = convert(incompleteChapters?.text.html, {
     wordwrap: 130,
   });
@@ -32,13 +23,7 @@ export default function LoginChapterList({
           style={{ marginRight: "2rem" }}
         />
         <NovelList>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
+          <NovelListInner>
             <h3>
               {incompleteChapters
                 ? incompleteChapters.title.html.length === 0
@@ -49,11 +34,9 @@ export default function LoginChapterList({
             {incompleteChapters ? (
               <span className="six">{textCounts.length}</span>
             ) : (
-              <span className="six" style={{ fontSize: "14px" }}>
-                {writtenCounts.length}
-              </span>
+              <span className="six font14">{writtenCounts.length}</span>
             )}
-          </div>
+          </NovelListInner>
         </NovelList>
       </NovelListWrapper>
     </>
@@ -67,4 +50,9 @@ const NovelListWrapper = styled.div`
 `;
 const NovelList = styled.div`
   display: flex;
+`;
+const NovelListInner = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;

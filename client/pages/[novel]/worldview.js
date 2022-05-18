@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { LinkWrapper } from "../../style/NovelMainStyle";
 import EditableBlockWorldview from "../../components/EditableBlockWorldview";
 import { useSelector, useDispatch } from "react-redux";
-import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import BlankNav from "../../components/BlankNav";
 import { sidebarTargetAction } from "../../reducer/etcducer";
 
@@ -33,11 +33,7 @@ export default function worldview() {
               {" "}
               <Link href={"/"}>
                 <span className="eightSeven">
-                  <LeftOutlined
-                    className="threeEight"
-                    style={{ fontSize: "14px" }}
-                  />{" "}
-                  {me?.nickName}
+                  <LeftOutlined className="threeEight font14" /> {me?.nickName}
                 </span>
               </Link>
             </div>

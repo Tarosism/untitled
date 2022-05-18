@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import ContentEditable from "react-contenteditable";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { worldviewNameAction, worldviewTextAction } from "../reducer/user";
 import styled from "styled-components";
+import { EditBlockWrapper, EditBlockSpace } from "./EditableBlock";
 
 export default function EditableBlock({ worldview }) {
   const ref = useRef();
@@ -18,22 +19,8 @@ export default function EditableBlock({ worldview }) {
 
   return (
     <>
-      <div
-        style={{
-          width: "31.25rem",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            padding: "0 1rem 1rem 1rem",
-          }}
-        ></div>
+      <EditBlockWrapper>
+        <EditBlockSpace></EditBlockSpace>
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"
@@ -59,7 +46,7 @@ export default function EditableBlock({ worldview }) {
             innerRef={ref}
           />
         </div>
-      </div>
+      </EditBlockWrapper>
     </>
   );
 }

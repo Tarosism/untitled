@@ -1,23 +1,17 @@
 import {
-  MODIFY_DATA,
   NOW_WRITTEN,
   MODIFY_DISABLE,
   SIDEBAR_TARGET,
+  SIDEBAR_CONTROLL,
 } from "./type";
 
 export const initalState = {
-  modifyData: null,
   nowWritten: null,
   disable: true,
   target: "",
+  sideControll: false,
 };
 
-export const modifyDataAction = (data) => {
-  return {
-    type: MODIFY_DATA,
-    data,
-  };
-};
 export const nowWrittenAction = (data) => {
   return {
     type: NOW_WRITTEN,
@@ -35,14 +29,15 @@ export const sidebarTargetAction = (target) => {
     target,
   };
 };
+export const sidebarControllAction = (bool) => {
+  return {
+    type: SIDEBAR_CONTROLL,
+    bool,
+  };
+};
 
 const etcReducer = (state = initalState, action) => {
   switch (action.type) {
-    case MODIFY_DATA:
-      return {
-        ...state,
-        modifyData: action.data,
-      };
     case NOW_WRITTEN:
       return {
         ...state,
@@ -57,6 +52,11 @@ const etcReducer = (state = initalState, action) => {
       return {
         ...state,
         target: action.target,
+      };
+    case SIDEBAR_CONTROLL:
+      return {
+        ...state,
+        sideControll: action.bool,
       };
     default:
       return state;

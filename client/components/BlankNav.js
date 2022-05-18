@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import SidePlate from "./SidePlate";
+import { sidebarControllAction } from "../reducer/etcducer";
 
-import { DashOutlined, DoubleLeftOutlined } from "@ant-design/icons";
+import { DoubleLeftOutlined } from "@ant-design/icons";
 
-export default function BlankNav({ setSideControll }) {
+export default function BlankNav() {
   const [sideOpen, setSideOpen] = useState(false);
   const [sideTag, setSideTag] = useState("");
+  const [sideTitle, setSideTitle] = useState("");
 
   const state = useSelector((state) => state.userReducer);
   const etcState = useSelector((state) => state.etcReducer);
@@ -15,45 +17,51 @@ export default function BlankNav({ setSideControll }) {
   const { target } = etcState;
   const dispatch = useDispatch();
 
-  const sideOpenHandler = (tag) => {
+  const sideOpenHandler = (tag, title) => {
     setSideTag(tag);
+    setSideTitle(title);
     setSideOpen(true);
-    setSideControll(true);
+    dispatch(sidebarControllAction(true));
   };
   const sideCloseHandler = () => {
     setSideOpen(false);
-    setSideControll(false);
+    dispatch(sidebarControllAction(false));
   };
   return (
     <>
       <SidebarWrapper>
         <Sidebar>
           {target !== "synopsis" && (
-            <SidebarSelectBox onClick={() => sideOpenHandler("synopsis")}>
+            <SidebarSelectBox
+              onClick={() => sideOpenHandler("synopsis", "시놉시스")}
+            >
               시놉
               <br />
               시스
             </SidebarSelectBox>
           )}
           {target !== "worldview" && (
-            <SidebarSelectBox onClick={() => sideOpenHandler("worldview")}>
+            <SidebarSelectBox
+              onClick={() => sideOpenHandler("worldview", "세계관")}
+            >
               세계관
             </SidebarSelectBox>
           )}
           {target !== "chara" && (
-            <SidebarSelectBox onClick={() => sideOpenHandler("chara")}>
+            <SidebarSelectBox
+              onClick={() => sideOpenHandler("chara", "캐릭터")}
+            >
               캐릭터
             </SidebarSelectBox>
           )}
-          <DashOutlined className="six" />
         </Sidebar>
         <ClickedSidebar className={sideOpen ? "sideOpenTab" : "sideCloseTab"}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>{sideTag}</div>
+            <div>{sideTitle}</div>
             <DoubleLeftOutlined onClick={sideCloseHandler} />
           </div>
           <hr />
-          <SidePlate sideTag={sideTag} />
+          <SidePlate sideTag={sideTag} sideTitle={sideTitle} />
         </ClickedSidebar>
       </SidebarWrapper>
     </>

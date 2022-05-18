@@ -49,17 +49,13 @@ export default function synopsisList() {
             {" "}
             <Link href={"/"}>
               <span className="eightSeven">
-                <LeftOutlined
-                  className="threeEight"
-                  style={{ fontSize: "14px" }}
-                />{" "}
-                {me?.nickName}
+                <LeftOutlined className="threeEight font14" /> {me?.nickName}
               </span>
             </Link>
           </div>
           <span className="threeEight">/</span>
           <Link href={`/${novel}`}>
-            <span className="eightSeven">{nowSelect.title.html}</span>
+            <span className="eightSeven">{nowSelect?.title?.html}</span>
           </Link>
           {linkCount > 2 && (
             <>
@@ -73,10 +69,7 @@ export default function synopsisList() {
           {nowSelect.synopsis.map((fill) => (
             <Link href={`/${novel}/synopsisList/${fill.id}`}>
               <NovelDoingSelect>
-                <ContainerOutlined
-                  style={{ fontSize: "2.5rem" }}
-                  className="eightSeven"
-                />
+                <ContainerOutlined className="eightSeven font2dot5rem" />
                 <br />
                 {fill.title.html ? fill.title.html : "무제"}
               </NovelDoingSelect>
@@ -84,10 +77,7 @@ export default function synopsisList() {
           ))}
 
           <NovelDoingSelect onClick={addSynopsis}>
-            <PlusCircleOutlined
-              style={{ fontSize: "2.5rem" }}
-              className="threeEight"
-            />
+            <PlusCircleOutlined className="threeEight font2dot5rem" />
           </NovelDoingSelect>
         </DoingWrapper>
       </MainDefault>

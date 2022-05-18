@@ -1,11 +1,6 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import {
-  MainDefault,
-  TextCenter,
-  PaddingLine,
-  NovelListAdd,
-} from "../style/MainStyle";
+import React, { useEffect } from "react";
+import { MainDefault, PaddingLine, NovelListAdd } from "../style/MainStyle";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
@@ -25,8 +20,8 @@ export default function LoginMain() {
     <>
       <MainDefault>
         <PaddingLine />
-        <h2 style={{ fontWeight: "bold" }}>{me.nickName} 님,</h2> <br />
-        <p className="eightSeven">오늘은 또 어떤 이야기를 들려주실 건가요?</p>
+        <h2>{me.nickName} 님,</h2> <br />
+        <p>오늘은 또 어떤 이야기를 들려주실 건가요?</p>
         <PaddingLine />
         <NovelListWrapper>
           {me.novelList.map((fill) => (
@@ -37,9 +32,7 @@ export default function LoginMain() {
             </Link>
           ))}
           <NovelListAdd>
-            <PlusCircleOutlined
-              style={{ color: "rgba(255, 255, 255, .38)", fontSize: "2rem" }}
-            />
+            <PlusCircleOutline />
           </NovelListAdd>
         </NovelListWrapper>
         <PaddingLine />
@@ -88,4 +81,9 @@ const NovelList = styled.div`
     z-index: -1;
     filter: brightness(0.5);
   }
+`;
+
+const PlusCircleOutline = styled(PlusCircleOutlined)`
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 2rem;
 `;

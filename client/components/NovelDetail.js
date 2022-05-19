@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import ContentEditable from "react-contenteditable";
 import { useSelector, useDispatch } from "react-redux";
 import { novelTitleFixAction, novelInfoFixAction } from "../reducer/user";
+import styled from "styled-components";
 
 export default function NovelDetail() {
   const router = useRouter();
@@ -32,20 +33,14 @@ export default function NovelDetail() {
   return (
     <>
       <br />
-      <div
-        style={{
-          display: "flex",
-          maxHeight: "13.75rem",
-          maxWidth: "69.375rem",
-        }}
-      >
+      <DetailWrapper>
         <img
           src="http://placeimg.com/320/220/any"
           style={{ marginRight: "2rem" }}
         />
         <div style={{ width: "100%" }}>
           <div>
-            <ContentEditable
+            <ContentEditableTitle
               className="eightSeven"
               html={nowSelect?.title.html}
               disabled={false}
@@ -55,17 +50,13 @@ export default function NovelDetail() {
               tagName="h2"
               placeholder={"무제"}
               onKeyDown={onKeyDownHandler}
-              style={{ overflow: "auto", height: "1.8rem" }}
             />
             <br />
             <p>
-              <span style={{ fontSize: "14px" }} className="six">
-                글{" "}
-              </span>{" "}
-              {me?.nickName}
+              <span className="six font14">글 </span> {me?.nickName}
             </p>
             <hr />
-            <ContentEditable
+            <ContentEditableInfo
               className="eightSeven"
               html={nowSelect?.info.html}
               disabled={false}
@@ -74,11 +65,24 @@ export default function NovelDetail() {
               }}
               tagName="div"
               placeholder={"작품 설명"}
-              style={{ overflow: "auto", height: "8rem" }}
             />
           </div>
         </div>
-      </div>
+      </DetailWrapper>
     </>
   );
 }
+
+const DetailWrapper = styled.div`
+  display: flex;
+  max-height: 13.75rem;
+  max-width: 69.375rem;
+`;
+const ContentEditableTitle = styled(ContentEditable)`
+  overflow: auto;
+  height: 1.8rem;
+`;
+const ContentEditableInfo = styled(ContentEditable)`
+  overflow: auto;
+  height: 8rem;
+`;

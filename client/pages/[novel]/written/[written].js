@@ -12,12 +12,13 @@ import EditableBlockModify from "../../../components/EditableBlockModify";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { modifyAction } from "../../../reducer/user";
 import {
-  modifyDataAction,
   nowWrittenAction,
   modifyDisableAction,
 } from "../../../reducer/etcducer";
-
+import { SideLinkWrapper } from "../../../components/LinkWrap";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+import { Beforeunload, useBeforeunload } from "react-beforeunload";
 
 export default function written() {
   const router = useRouter();
@@ -28,54 +29,55 @@ export default function written() {
   const state = useSelector((state) => state.userReducer);
   const etcState = useSelector((state) => state.etcReducer);
   const { me, nowSelect } = state;
-  const { modifyData, nowWritten, disable } = etcState;
+  const { nowWritten } = etcState;
   const dispatch = useDispatch();
+
+  const [disable, setDisable] = useState(true);
 
   const [idx, setIdx] = useState(
     nowSelect.written.findIndex((fill) => fill.id === Number(written))
   );
-
   useEffect(() => {
     dispatch(nowWrittenAction(nowSelect.written[idx]));
   }, [disable]);
 
+  const [modifyData, setModifyData] = useState(nowSelect.written[idx]);
+
   const prevHandler = () => {
+    setModifyData(nowSelect.written[idx - 1]);
     dispatch(nowWrittenAction(nowSelect.written[idx - 1]));
     setIdx((prev) => prev - 1);
     router.push(`/${novel}/written/${nowWritten.id}`);
   };
   const nextHandler = () => {
+    setModifyData(nowSelect.written[idx + 1]);
     dispatch(nowWrittenAction(nowSelect.written[idx + 1]));
     setIdx((prev) => prev + 1);
     router.push(`/${novel}/written/${nowWritten.id}`);
   };
 
   const modifyHandler = () => {
-    dispatch(modifyDisableAction());
-    dispatch(modifyDataAction(nowWritten));
+    setDisable(false);
   };
   const endModifyHandler = () => {
-    dispatch(modifyDataAction(null));
     dispatch(modifyAction(idx, modifyData));
-    dispatch(modifyDisableAction());
+    setDisable(true);
   };
+
+  const [unload, setUnload] = useState(false);
+  //const unloadHandler = () =>
+  useBeforeunload((e) => !disable && e.preventDefault());
+  //이걸 어떻게 써먹어야 할지 감도 안 잡힌다
   return (
     <>
       <BlankWrapper>
         <BlackMain>
           <LinkWrapperBlank>
-            <div
-              style={{
-                display: "flex",
-                width: "30rem",
-                fontSize: "14px",
-                gap: "1rem",
-              }}
-            >
-              <div style={{ marginLeft: "1rem" }}>
+            <SideLinkWrapper>
+              <div>
                 {" "}
                 <Link href={"/"}>
-                  <span className="eightSeven">
+                  <span className="eightSeven" onClick={() => console.log("a")}>
                     <LeftOutlined
                       className="threeEight"
                       style={{ fontSize: "14px" }}
@@ -94,63 +96,25 @@ export default function written() {
                   <span className="eightSeven">{nowWritten?.title?.html}</span>
                 </>
               )}
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: "14px",
-                gap: "1rem",
-                alignItems: "center",
-              }}
-            >
+            </SideLinkWrapper>
+            <ModifyBtnWrapper>
               <div style={{ textAlign: "end" }}>
                 {/* <p className="six">{textCounts.length} 자</p> */}
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "1rem",
-                }}
-              >
+              <ModifyBtnInner>
                 {disable ? (
-                  <span
-                    className="six"
-                    style={{
-                      fontSize: "1rem",
-                      padding: "0.25rem",
-                      border: "1px solid rgba(255,255,255, 60%)",
-                      borderRadius: "20%",
-                    }}
-                    onClick={modifyHandler}
-                  >
+                  <ModifyBtn className="six" onClick={modifyHandler}>
                     수정
-                  </span>
+                  </ModifyBtn>
                 ) : (
-                  <span
-                    className="six"
-                    style={{
-                      fontSize: "1rem",
-                      padding: "0.25rem",
-
-                      borderRadius: "20%",
-                      backgroundColor: "violet",
-                    }}
-                    onClick={endModifyHandler}
-                  >
+                  <ModifyBtnEnd className="six" onClick={endModifyHandler}>
                     완료
-                  </span>
+                  </ModifyBtnEnd>
                 )}
-              </div>
+              </ModifyBtnInner>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "end",
-                  padding: "0 1rem 1rem 1rem",
-                }}
-              ></div>
-            </div>
+              <div className="flexEnd paddingZOOO"></div>
+            </ModifyBtnWrapper>
           </LinkWrapperBlank>
 
           <EditableBlockWrapper>
@@ -159,22 +123,18 @@ export default function written() {
             {idx === 0 || !disable ? (
               <></>
             ) : (
-              <LeftOutlined
-                className="six"
-                style={lineLt}
-                onClick={prevHandler}
-              />
+              <LeftOutline className="six" onClick={prevHandler} />
             )}
 
-            <EditableBlockModify />
+            <EditableBlockModify
+              modifyData={modifyData}
+              setModifyData={setModifyData}
+              disable={disable}
+            />
             {idx === nowSelect.written.length - 1 || !disable ? (
               <></>
             ) : (
-              <RightOutlined
-                className="six"
-                style={lineRt}
-                onClick={nextHandler}
-              />
+              <RightOutline className="six" onClick={nextHandler} />
             )}
           </EditableBlockWrapper>
         </BlackMain>
@@ -182,16 +142,41 @@ export default function written() {
     </>
   );
 }
+const LeftOutline = styled(LeftOutlined)`
+  position: fixed;
+  top: 50%;
+  left: 25%;
+  font-size: 2.5rem;
+`;
+const RightOutline = styled(RightOutlined)`
+  position: fixed;
+  top: 50%;
+  right: 25%;
+  font-size: 2.5rem;
+`;
+const ModifyBtnWrapper = styled.div`
+  display: flex;
+  font-size: 14px;
+  gap: 1rem;
+  align-items: center;
+`;
 
-const lineLt = {
-  position: "fixed",
-  top: "50%",
-  left: "25%",
-  fontSize: "2.5rem",
-};
-const lineRt = {
-  position: "fixed",
-  top: "50%",
-  right: "25%",
-  fontSize: "2.5rem",
-};
+const ModifyBtnInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+`;
+
+const ModifyBtn = styled.span`
+  font-size: 1rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 60%);
+  border-radius: 20%;
+  background-color: transparent;
+`;
+const ModifyBtnEnd = styled.span`
+  font-size: 1rem;
+  padding: 0.25rem;
+  border-radius: 20%;
+  background-color: violet;
+`;

@@ -16,10 +16,6 @@ export default function LoginModal({ setLoginModal }) {
   const etcState = useSelector((state) => state.etcReducer);
   const { nowWritten } = etcState;
 
-  useEffect(() => {
-    dispatch(modifyDataAction(nowWritten));
-  }, []);
-
   const [email, setEmail] = useState("asd");
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -52,8 +48,8 @@ export default function LoginModal({ setLoginModal }) {
               chara: [
                 {
                   id: 0,
-                  name: { html: "김깐돌" },
-                  info: { html: "귀염둥이 깐돌이" },
+                  title: { html: "김깐돌" },
+                  text: { html: "귀염둥이 깐돌이" },
                 },
               ],
               worldview: { title: { html: "" }, text: { html: "" } },
@@ -88,13 +84,13 @@ export default function LoginModal({ setLoginModal }) {
               chara: [
                 {
                   id: 0,
-                  name: { html: "김깐돌" },
-                  info: { html: "버전업된 귀염둥이 깐돌이" },
+                  title: { html: "김깐돌" },
+                  text: { html: "버전업된 귀염둥이 깐돌이" },
                 },
                 {
                   id: 1,
-                  name: { html: "고귀한 막시무스 1세" },
-                  info: { html: "그는 고귀했습니다" },
+                  title: { html: "고귀한 막시무스 1세" },
+                  text: { html: "그는 고귀했습니다" },
                 },
               ],
               worldview: {

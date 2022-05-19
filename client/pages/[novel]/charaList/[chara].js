@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { LinkWrapper } from "../../../style/NovelMainStyle";
+import { LinkWrapper, PaddingLine13 } from "../../../style/NovelMainStyle";
 import EditableBlockChara from "../../../components/EditableBlockChara";
-import { LeftOutlined, CopyOutlined } from "@ant-design/icons";
 import BlankNav from "../../../components/BlankNav";
 import { useSelector, useDispatch } from "react-redux";
 import { sidebarTargetAction } from "../../../reducer/etcducer";
+import LinkWrap from "../../../components/LinkWrap";
 
 export default function chara() {
   const router = useRouter();
@@ -15,7 +14,9 @@ export default function chara() {
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state.userReducer);
-  const { me, nowSelect } = state;
+  const etcState = useSelector((state) => state.etcReducer);
+  const { nowSelect } = state;
+  const { sideControll } = etcState;
 
   useEffect(() => {
     dispatch(sidebarTargetAction("chara"));
@@ -32,45 +33,14 @@ export default function chara() {
         <BlankNav />
         <BlackMain>
           <LinkWrapper>
-            <div
-              style={{
-                display: "flex",
-                width: "30rem",
-                fontSize: "14px",
-                gap: "1rem",
-              }}
-            >
-              <div style={{ marginLeft: "1rem" }}>
-                {" "}
-                <Link href={"/"}>
-                  <span className="eightSeven">
-                    <LeftOutlined
-                      className="threeEight"
-                      style={{ fontSize: "14px" }}
-                    />{" "}
-                    {me?.nickName}
-                  </span>
-                </Link>
-              </div>
-              <span className="threeEight">/</span>
-              <Link href={`/${novel}`}>
-                <span className="eightSeven">{nowSelect.title.html}</span>
-              </Link>
-              {linkCount > 2 && (
-                <>
-                  <span className="threeEight">/</span>
-                  <Link href={`/${novel}/charaList`}>
-                    <span className="eightSeven">캐릭터</span>
-                  </Link>
-                  <span className="threeEight">/</span>
-                  <span className="eightSeven">{nowChara.name.html}</span>
-                </>
-              )}
-            </div>
+            <LinkWrap props={nowChara} linkCount={linkCount} />
           </LinkWrapper>
-
+          <PaddingLine13 />
           <EditableBlockWrapper>
-            <EditableBlockChara nowChara={nowChara} />
+            <EditableBlockChara
+              nowChara={nowChara}
+              sideControll={sideControll}
+            />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>

@@ -60,24 +60,17 @@ export default function SignupModal({ setSingupModal }) {
           value={penname}
           onChange={(e) => onChangePenname(e)}
         />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            gap: "1rem",
-          }}
-        >
-          <label className="six">
+        <CheckboxWrapper>
+          <label className="six font14">
             {" "}
             <input type="checkbox" onChange={onCheckTerms} /> 약관에 동의하는
             데수웅
           </label>
-          <label className="six">
+          <label className="six font14">
             {" "}
-            <input type="checkbox" /> 이메일로 스팸메일을 보내는 데수웅 (선택)
+            <input type="checkbox" /> 이메일로 스팸메일을 보냄 (선택)
           </label>
-        </div>
+        </CheckboxWrapper>
         <LoginBtn htmlType="submit" onClick={signupSuccess}>
           가입하기
         </LoginBtn>
@@ -96,4 +89,11 @@ const LoginBtn = styled.button`
   border-radius: 5px;
   border: 2px solid violet;
   font-weight: 700;
+`;
+
+const CheckboxWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
 `;

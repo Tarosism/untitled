@@ -13,6 +13,9 @@ export const TextCenter = styled.div`
 export const PaddingLine = styled.div`
   padding: 25px 0;
 `;
+export const PaddingLine13 = styled.div`
+  padding: 13px 0;
+`;
 
 export const LinkWrapperBlank = styled.div`
   display: flex;
@@ -23,7 +26,7 @@ export const LinkWrapperBlank = styled.div`
   align-items: center;
   position: fixed;
   top: 0;
-  left: 1rem;
+  left: 0;
   z-index: 99;
   background-color: #303030;
 `;

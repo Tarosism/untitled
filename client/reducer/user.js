@@ -241,7 +241,7 @@ const userReducer = (state = initalState, action) => {
         state.nowSelect.id
       );
       const cNameArr = [...state.me.novelList];
-      cNameArr[cNameMatchNovel].chara[cNameIdx].name = action.name;
+      cNameArr[cNameMatchNovel].chara[cNameIdx].title = action.name;
       return {
         ...state,
         me: { ...state.me, novelList: cNameArr },
@@ -253,7 +253,7 @@ const userReducer = (state = initalState, action) => {
         state.nowSelect.id
       );
       const cInfoArr = [...state.me.novelList];
-      cInfoArr[cInfoMatchNovel].chara[cInfoIdx].info = action.info;
+      cInfoArr[cInfoMatchNovel].chara[cInfoIdx].text = action.info;
 
       return {
         ...state,

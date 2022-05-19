@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import {
+  PaddingLine,
   PaddingLine13,
   BlankWrapper,
   BlackMain,
@@ -54,37 +55,36 @@ export default function blank() {
       <BlankWrapper>
         <BlankNav />
         <BlackMain>
-          <div style={{ display: "flex" }}>
-            <LinkWrap linkCount={linkCount} props={nowSelect.writing} />
-            <SideBtnWrapper>
-              <div style={{ textAlign: "end" }}>
-                <p className="six font14">{textCounts.length} 자</p>
-              </div>
-              <SideBtnInnerWrapper>
-                <CopyToClipboard
-                  text={textCounts}
-                  onCopy={(textCounts, result) =>
-                    copyTextHandler(textCounts, result)
-                  }
-                >
-                  <CopyBtn className="six">복사</CopyBtn>
-                </CopyToClipboard>
-                <CopyBtn
-                  className="six"
-                  onClick={() => {
-                    const { id } = nowSelect.writing;
-                    dispatch(endBlankAction());
-                    router.push(`/${novel}/written/${id}`);
-                  }}
-                >
-                  완료
-                </CopyBtn>
-              </SideBtnInnerWrapper>
+          <LinkWrap linkCount={linkCount} props={nowSelect.writing} />
+          <SideBtnWrapper>
+            <div style={{ textAlign: "end" }}>
+              <p className="six font14">{textCounts.length} 자</p>
+            </div>
+            <SideBtnInnerWrapper>
+              <CopyToClipboard
+                text={textCounts}
+                onCopy={(textCounts, result) =>
+                  copyTextHandler(textCounts, result)
+                }
+              >
+                <CopyBtn className="six">복사</CopyBtn>
+              </CopyToClipboard>
+              <CopyBtn
+                className="six"
+                onClick={() => {
+                  const { id } = nowSelect.writing;
+                  dispatch(endBlankAction());
+                  router.push(`/${novel}/written/${id}`);
+                }}
+              >
+                완료
+              </CopyBtn>
+            </SideBtnInnerWrapper>
 
-              <CopyBtnSort></CopyBtnSort>
-            </SideBtnWrapper>
-          </div>
+            <CopyBtnSort></CopyBtnSort>
+          </SideBtnWrapper>
           <EditableBlockWrapper>
+            <PaddingLine />
             <PaddingLine13 />
             <EditableBlockBlank
               nowBlank={nowSelect.writing}
@@ -119,6 +119,10 @@ export const SideBtnWrapper = styled.div`
   font-size: 14px;
   gap: 1rem;
   align-items: center;
+  z-index: 100;
+  position: fixed;
+  right: 1rem;
+  top: 0.8rem;
 `;
 export const SideBtnInnerWrapper = styled.div`
   display: flex;

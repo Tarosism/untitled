@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { LinkWrapper } from "../../../style/NovelMainStyle";
+import { LinkWrapper, PaddingLine13 } from "../../../style/NovelMainStyle";
 import EditableBlockChara from "../../../components/EditableBlockChara";
 import BlankNav from "../../../components/BlankNav";
 import { useSelector, useDispatch } from "react-redux";
@@ -35,6 +35,7 @@ export default function chara() {
           <LinkWrapper>
             <LinkWrap props={nowChara} linkCount={linkCount} />
           </LinkWrapper>
+          <PaddingLine13 />
           <EditableBlockWrapper>
             <EditableBlockChara
               nowChara={nowChara}

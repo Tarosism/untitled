@@ -212,13 +212,13 @@ hr {
 .opa100 {
   opacity: 100%;
   top: 50%;
-
+  visibility: visible;
   transition: all ease 0.5s 0s;
 }
 
 .opa0 {
   top: 55%;
-
+  visibility: hidden;
   opacity: 0%;
   transition: all ease 0.5s 0s;
 }

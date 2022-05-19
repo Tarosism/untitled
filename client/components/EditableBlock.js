@@ -39,18 +39,8 @@ export default function EditableBlock({ nowSynopsis, sideControll }) {
   return (
     <>
       <EditBlockWrapper className={sideControll ? "mgL25" : "mgL0"}>
-        <div style={{ textAlign: "end" }}>
-          <p className="six mgZOOO">{textCounts.length}</p>
-        </div>
         <EditBlockSpace></EditBlockSpace>
-        <div className="flexEnd">
-          <CopyToClipboard
-            text={textCounts}
-            onCopy={(textCounts, result) => copyTextHandler(textCounts, result)}
-          >
-            <CopyToOutline className="eightSeven" />
-          </CopyToClipboard>
-        </div>
+
         <div style={{ width: "100%" }}>
           <ContentEditable
             className="eightSeven"

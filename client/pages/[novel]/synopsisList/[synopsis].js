@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { LinkWrapper } from "../../../style/NovelMainStyle";
+import { PaddingLine, PaddingLine13 } from "../../../style/NovelMainStyle";
 import EditableBlock from "../../../components/EditableBlock";
 import BlankNav from "../../../components/BlankNav";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,6 +34,8 @@ export default function synopsis() {
         <BlankNav />
         <BlackMain>
           <LinkWrap props={nowSynopsis} linkCount={linkCount} />
+          <PaddingLine />
+          <PaddingLine13 />
           <EditableBlockWrapper>
             <EditableBlock
               nowSynopsis={nowSynopsis}

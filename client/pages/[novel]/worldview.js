@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { LinkWrapper } from "../../style/NovelMainStyle";
+import { PaddingLine, PaddingLine13 } from "../../style/NovelMainStyle";
 import EditableBlockWorldview from "../../components/EditableBlockWorldview";
 import { useSelector, useDispatch } from "react-redux";
 import { LeftOutlined } from "@ant-design/icons";
 import BlankNav from "../../components/BlankNav";
 import { sidebarTargetAction } from "../../reducer/etcducer";
+import { SideLinkWrapper } from "../../components/LinkWrap";
 
 export default function worldview() {
   const router = useRouter();
@@ -16,6 +17,8 @@ export default function worldview() {
 
   const state = useSelector((state) => state.userReducer);
   const { me, nowSelect } = state;
+  const etcState = useSelector((state) => state.etcReducer);
+  const { sideControll } = etcState;
 
   useEffect(() => {
     dispatch(sidebarTargetAction("chara"));
@@ -28,29 +31,36 @@ export default function worldview() {
       <BlankWrapper>
         <BlankNav />
         <BlackMain>
-          <LinkWrapper>
-            <div>
-              {" "}
-              <Link href={"/"}>
-                <span className="eightSeven">
-                  <LeftOutlined className="threeEight font14" /> {me?.nickName}
-                </span>
+          <div className={sideControll ? "sideOpen" : "sideClose"}>
+            <SideLinkWrapper>
+              <div>
+                {" "}
+                <Link href={"/"}>
+                  <span className="eightSeven">
+                    <LeftOutlined className="threeEight font14" />{" "}
+                    {me?.nickName}
+                  </span>
+                </Link>
+              </div>
+              <span className="threeEight">/</span>
+              <Link href={`/${novel}`}>
+                <span className="eightSeven">{nowSelect.title.html}</span>
               </Link>
-            </div>
-            <span className="threeEight">/</span>
-            <Link href={`/${novel}`}>
-              <span className="eightSeven">{nowSelect.title.html}</span>
-            </Link>
-            {linkCount > 2 && (
-              <>
-                <span className="threeEight">/</span>
-                <span className="eightSeven">세계관</span>
-              </>
-            )}
-          </LinkWrapper>
-
+              {linkCount > 2 && (
+                <>
+                  <span className="threeEight">/</span>
+                  <span className="eightSeven">세계관</span>
+                </>
+              )}
+            </SideLinkWrapper>
+          </div>
           <EditableBlockWrapper>
-            <EditableBlockWorldview worldview={nowSelect.worldview} />
+            <PaddingLine />
+            <PaddingLine13 />
+            <EditableBlockWorldview
+              worldview={nowSelect.worldview}
+              sideControll={sideControll}
+            />
           </EditableBlockWrapper>
         </BlackMain>
       </BlankWrapper>

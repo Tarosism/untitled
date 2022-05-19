@@ -5,7 +5,7 @@ import { worldviewNameAction, worldviewTextAction } from "../reducer/user";
 import styled from "styled-components";
 import { EditBlockWrapper, EditBlockSpace } from "./EditableBlock";
 
-export default function EditableBlock({ worldview }) {
+export default function EditableBlock({ worldview, sideControll }) {
   const ref = useRef();
 
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export default function EditableBlock({ worldview }) {
 
   return (
     <>
-      <EditBlockWrapper>
+      <EditBlockWrapper className={sideControll ? "mgL25" : "mgL0"}>
         <EditBlockSpace></EditBlockSpace>
         <div style={{ width: "100%" }}>
           <ContentEditable

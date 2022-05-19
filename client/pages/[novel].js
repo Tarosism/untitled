@@ -57,13 +57,16 @@ export default function novel() {
       <LoginNav />
       <MainDefault>
         <WritingAlert className={writingAlert}>
-          작성 중인 회차가 있습니다. <br />
-          저장하고 새 회차를 시작하시겠어요?
-          <WritingAlertBtnWrapper>
-            <No onClick={() => setWritingAlert("opa0")}>잠시만요</No>
-            <Yes onClick={alertHandler}>네</Yes>
-          </WritingAlertBtnWrapper>
+          <WritingAlertInner>
+            작성 중인 회차가 있습니다. <br />
+            저장하고 새 회차를 시작하시겠어요?
+            <WritingAlertBtnWrapper>
+              <No onClick={() => setWritingAlert("opa0")}>잠시만요</No>
+              <Yes onClick={alertHandler}>네</Yes>
+            </WritingAlertBtnWrapper>
+          </WritingAlertInner>
         </WritingAlert>
+
         <br />
         <LinkWrapper>
           <div>
@@ -152,16 +155,18 @@ const WritingAlert = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   /* display: grid; */
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 1.5rem 1.5rem;
   background: #282828;
   border-radius: 10px;
   text-align: center;
   z-index: 21;
   color: rgba(255, 255, 255, 87%);
   line-height: 1.5rem;
+`;
+const WritingAlertInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem 1.5rem;
 `;
 const Yes = styled.button`
   width: 7rem;

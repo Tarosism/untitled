@@ -2,11 +2,22 @@ import styled from "styled-components";
 
 export const NavBar = styled.div`
   background-color: #282828;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 80px;
   padding: 0 278px;
+  position: sticky;
+  top: 0;
+  @media ${(props) => props.theme.laptop} {
+    padding: 0 250px;
+  }
+  @media ${(props) => props.theme.tabletL} {
+    padding: 0 210px;
+  }
+  @media ${(props) => props.theme.tabletM} {
+    padding: 0 200px;
+  }
+  @media ${(props) => props.theme.tabletS} {
+    padding: 0 180px;
+  }
 `;
 
 export const NavButtonSide = styled.button`

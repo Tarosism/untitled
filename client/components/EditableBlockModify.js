@@ -25,7 +25,6 @@ export default function EditableBlock({ modifyData, setModifyData, disable }) {
   const modifyTextHandler = (e) => {
     setModifyData({ ...modifyData, text: { html: e.target.value } });
   };
-  console.log(modifyData);
   return (
     <>
       <EditBlockWrapper>

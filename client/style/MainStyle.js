@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainDefault = styled.div`
-  margin: 0 278px;
+  padding: 0 278px;
 `;
 export const TextCenter = styled.div`
   display: flex;

@@ -1,7 +1,21 @@
 import styled from "styled-components";
 
 export const MainDefault = styled.div`
-  margin: 0 416px;
+  aspect-ratio: auto 1 / 1;
+  padding: 0 278px;
+  width: 66vw;
+  @media ${(props) => props.theme.laptop} {
+    padding: 0 250px;
+  }
+  @media ${(props) => props.theme.tabletL} {
+    padding: 0 210px;
+  }
+  @media ${(props) => props.theme.tabletM} {
+    padding: 0 200px;
+  }
+  @media ${(props) => props.theme.tabletS} {
+    padding: 0 180px;
+  }
 `;
 export const TextCenter = styled.div`
   display: flex;
@@ -36,19 +50,17 @@ export const LinkWrapper = styled.div`
   gap: 1rem;
   height: 3rem;
   align-items: center;
-  margin-left: 1rem;
 `;
 
 export const DoingWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 15rem);
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   justify-content: space-between;
-  gap: 5rem 50px;
+  justify-items: center;
+  gap: 2rem 10px;
 `;
 
-export const IntroduceWrapper = styled.div`
-  display: grid;
-`;
+export const IntroduceWrapper = styled.div``;
 
 export const BlankWrapper = styled.div`
   display: flex;
